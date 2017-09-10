@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:text="原文"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:padding="10dp" />
+
+        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            style="@style/wrap_layout"
+
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+
+            <TextView
+                android:text="类型"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/card_tv_type"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/card_item_image"
+                android:maxHeight="120dp"
+                />
+
+            <TextView style="@style/usertext"
+                android:text="我去问哪里出了山河谷哪里有卖，万能的东西，如果女票有点时候会想到"
+                android:id="@+id/card_tv_content"
+                android:padding="8dp"
+                android:autoLink="web"/>
+
+            <TextView style="@style/usertext"
+                android:id="@+id/card_tv_coin"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+
+                />
+            <VideoView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:id="@+id/card_vv_video"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:text="2017-04-30 12:00:23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/card_time"
+                android:layout_weight="1"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignRight="@+id/linearLayout"
+                android:layout_alignEnd="@+id/linearLayout"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:text="评论(0)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:padding="11dp"
+            android:id="@+id/card_tv_count" />
+        <ListView
+            android:divider="#00000000"
+            android:dividerHeight="6dp"
+            android:id="@+id/card_lv_comment"
+            android:layout_width="match_parent"
+            android:layout_height="251dp"
+            android:layout_weight="0.98">
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:id="@+id/card_et_comment"
+                android:layout_height="match_parent"
+                android:layout_weight="1.05" />
+
+            <Button
+                android:text="提交"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:id="@+id/card_bt_comment" />
+        </LinearLayout >
+
+    </LinearLayout>
+</ScrollView>

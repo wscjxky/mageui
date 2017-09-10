@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/userinfo_vp_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+        android:layout_gravity="bottom|right|end"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        app:fab_colorNormal="@color/pink"
+        app:fab_icon="@drawable/icn_1"
+        android:id="@+id/userinfo_btn_chat"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_cv_userimage"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/logo2"
+        app:layout_anchor="@+id/userinfo_tl_tabs"
+        android:elevation="8dp"
+        app:layout_scrollFlags="scroll"
+        app:layout_anchorGravity="top|center_horizontal"
+
+        />
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/userinfo_al_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/userinfo_ct_colltoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/hua"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|snap">
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+        ​​
+
+        <LinearLayout
+            android:id="@+id/userinfo_ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:theme="@style/ThemeOverlay.AppCompat.Light">
+
+            <Button
+                android:id="@+id/userinfo_btn_change"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="笔" />
+
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:id="@+id/userinfo_but_follow"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="120dp"
+                android:src="@android:color/darker_gray"
+                app:allow_random_color="false"
+                app:big_shine_color="#FF6666"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="#FF6666"
+                app:click_animation_duration="200"
+                app:enable_flashing="false"
+                app:shine_animation_duration="1500"
+                app:shine_count="8"
+                app:shine_turn_angle="10"
+                app:siShape="@raw/heart"
+                app:small_shine_color="#CC9999"
+                app:small_shine_offset_angle="20" />
+
+        </LinearLayout>
+        ​
+
+        ​
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/userinfo_tl_tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:tabIndicatorColor="?android:attr/textColorPrimaryInverse"
+            app:tabIndicatorHeight="4dp"
+            app:tabSelectedTextColor="?android:attr/textColorPrimaryInverse" />
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>

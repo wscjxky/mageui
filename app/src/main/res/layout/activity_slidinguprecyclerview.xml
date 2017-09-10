@@ -1,0 +1,192 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+
+    <!--
+    Dummy background contents.
+    You can replace this to map or something.
+    -->
+
+
+        <ImageView
+            android:id="@+id/image_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@drawable/bg_wood" />
+
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/flexible_space_image_height"
+        android:scaleType="centerCrop"
+        android:src="@drawable/example" />
+
+    <com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout
+        android:id="@+id/scroll_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+
+        <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/header_bar_height"
+            android:background="@android:color/white" />
+
+        <FrameLayout
+            android:id="@+id/header"
+
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:clipChildren="false">
+
+            <View
+                android:id="@+id/header_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_bar_height"
+                android:background="@color/colorPrimary"
+                android:minHeight="@dimen/header_bar_height" />
+
+            <LinearLayout
+                android:id="@+id/header_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_bar_height"
+                android:minHeight="@dimen/header_bar_height"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/margin_standard"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:id="@+id/header_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/header_flexible_space"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="?attr/colorPrimary" />
+
+            </LinearLayout>
+
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:src="@android:color/darker_gray"
+                android:id="@+id/circle_but_subscribe"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="#FF6666"
+                app:allow_random_color="false"
+                app:enable_flashing="false"
+                app:big_shine_color="#FF6666"
+                app:click_animation_duration="200"
+                app:shine_animation_duration="1500"
+                app:shine_turn_angle="10"
+                app:small_shine_offset_angle="20"
+                app:small_shine_color="#CC9999"
+                app:shine_count="8"
+                app:siShape="@raw/star"/>
+        </FrameLayout>
+    </com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:theme="@style/Toolbar" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/toolbar_margin_start"
+        android:paddingRight="@dimen/margin_extra_short"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        fab:fab_addButtonColorNormal="@color/pink"
+
+        fab:fab_labelStyle="@style/menu_labels_style"
+        >
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_icon="@drawable/ic_fab_star"
+
+            fab:fab_title="添加文字"
+            />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addphoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_fab_star"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_title="添加图片"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_fab_star"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_title="添加链接"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addvideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_fab_star"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_title="添加视频"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addreward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_fab_star"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_title="添加悬赏"
+            />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</FrameLayout>

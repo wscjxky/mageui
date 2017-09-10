@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/usedgood_iv_logo"
+        android:background="@drawable/food2"
+        android:layout_height="240dp"
+        android:layout_gravity="center" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_height="10dp"
+        android:background="@color/colorPrimary" />
+    <LinearLayout
+        android:id="@+id/offview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:text="口红"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/usedgood_tv_title"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="30sp"
+            />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20sp"
+
+                android:text=" 简 介:  " />
+
+            <TextView
+
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/usedgood_tv_content"
+                />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20sp"
+                android:text=" 出 价:  " />
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/usedgood_tv_price"
+                android:textSize="20sp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20sp"
+
+                android:text=" 讲 价:  " />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/usedgood_tv_ifbargain"
+                android:gravity="right"
+                android:text="支持"
+                android:layout_alignParentRight="true"
+                android:textSize="20sp"
+                />
+
+        </RelativeLayout>
+
+        <Button
+            android:text="联系对方"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/background"
+            android:id="@+id/infobase_btu_contactuser" />
+
+        <CheckBox
+            android:id="@+id/infobase_checkbox_finish"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="交易完成"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>

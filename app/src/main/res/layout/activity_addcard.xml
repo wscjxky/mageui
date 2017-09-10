@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:text="内容描述"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <EditText
+            android:id="@+id/addcard_content"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <Button
+            android:id="@+id/addcard_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:id="@+id/addcard_ll_inputcoin"
+        android:visibility="invisible">
+        <TextView
+            android:text="悬赏金币:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <EditText
+            android:id="@+id/addcard_et_coin"
+            android:inputType="number"
+            android:layout_marginLeft="20dp"
+            android:hint="0-9"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <Button
+            android:id="@+id/addcard_check1"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/addcard_ll_addlayout"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:text="添加"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@android:drawable/ic_menu_add"
+            android:id="@+id/addcard_addimg"
+            android:layout_marginLeft="40dp"
+            android:contentDescription="@null"
+            android:clickable="true"
+            android:visibility="gone"/>
+
+        <VideoView
+            android:layout_width="216dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:id="@+id/addcard_vv_videoView"
+            android:clickable="true"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/addcard_submit"
+        android:background="@color/pink"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30.0dip"
+        android:layout_marginRight="30.0dip"
+        android:layout_marginTop="20.0dip"
+        android:text="发      布"
+        />
+
+</LinearLayout>

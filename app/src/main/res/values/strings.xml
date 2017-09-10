@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MageMata</string>
+    <string name="loginTitle">登录</string>
+    <string name="loginHint">姓名</string>
+    <string name="loginPasswordHint">密码</string>
+    <string name="loginActionText">登录</string>
+    <string name="login">登录</string>
+    <string name="name">姓名</string>
+    <string name="password">密码</string>
+    <string name="go">登录</string>
+    <string name="register">注册</string>
+    <string name="repeat_password">确认密码</string>
+    <string name="next">注册</string>
+    <string name="subscribe_success">关注成功</string>
+    <string name="subscribe_failed">取消关注</string>
+    <string name="login_success">登陆成功</string>
+    <string name="login_failed">登陆失败</string>
+
+</resources>
