@@ -15,5 +15,14 @@
     <string name="subscribe_failed">取消关注</string>
     <string name="login_success">登陆成功</string>
     <string name="login_failed">登陆失败</string>
+    <string name="Error" >错误</string>
+    <string name="check" >检查</string>
+    <string name="back" >退后</string>
+
+    <string name="checkInternet" >失败了,请检查网络</string>
+
+    <string name="uploading" >上传中</string>
+    <string name="uploadfinish" >上传成功</string>
+    <string name="uploaderror" >上传失败</string>
 
 </resources>

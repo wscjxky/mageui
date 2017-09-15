@@ -29,7 +29,6 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center_horizontal"
-        android:src="@mipmap/logo2"
         app:layout_anchor="@+id/userinfo_tl_tabs"
         android:elevation="8dp"
         app:layout_scrollFlags="scroll"
@@ -68,6 +67,7 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
+                android:visibility="invisible"
                 android:text="笔" />
 
             <com.sackcentury.shinebuttonlib.ShineButton

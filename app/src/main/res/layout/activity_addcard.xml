@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp">
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        style="@style/mytoolbar"
+        android:id="@+id/toolbar"
+       />
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <TextView
+            android:text="标题"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <EditText
+            android:id="@+id/addcard_et_title"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:width="200dp"/>
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -14,21 +38,20 @@
         android:weightSum="1">
 
         <TextView
-            android:text="内容描述"
+            android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+            android:text="内容描述" />
 
         <EditText
-            android:id="@+id/addcard_content"
-            android:layout_marginLeft="20dp"
+            android:id="@+id/addcard_et_content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+            android:layout_marginLeft="20dp"
+            android:width="200dp" />
 
-        <Button
-            android:id="@+id/addcard_check"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="50.0dip"
@@ -36,7 +59,7 @@
         android:orientation="horizontal"
         android:weightSum="1"
         android:id="@+id/addcard_ll_inputcoin"
-        android:visibility="invisible">
+        android:visibility="gone">
         <TextView
             android:text="悬赏金币:"
             android:layout_height="wrap_content"
@@ -74,12 +97,12 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@android:drawable/ic_menu_add"
-            android:id="@+id/addcard_addimg"
+            android:background="@android:drawable/ic_menu_add"
+            android:id="@+id/addcard_iv_addimg"
             android:layout_marginLeft="40dp"
             android:contentDescription="@null"
             android:clickable="true"
-            android:visibility="gone"/>
+            />
 
         <VideoView
             android:layout_width="216dp"
@@ -90,7 +113,7 @@
             android:visibility="gone"/>
     </LinearLayout>
     <Button
-        android:id="@+id/addcard_submit"
+        android:id="@+id/addcard_btn_submit"
         android:background="@color/pink"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

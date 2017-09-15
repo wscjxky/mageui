@@ -3,15 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="108dp"
-    android:layout_marginBottom="8dp"
+    android:layout_height="80dp"
+    android:layout_marginBottom="2dp"
     android:layout_marginLeft="3dp"
     android:layout_marginRight="3dp"
-    android:layout_marginTop="10dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="12dp"
-    app:cardBackgroundColor="@color/lavenderblush"
-    app:elevation="1dp">
+    android:layout_marginTop="8dp"
+   >
 
 
     <LinearLayout
@@ -23,38 +20,40 @@
         android:weightSum="1">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circle_iv_logo"
+            android:id="@+id/comment_item_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right" />
+            android:layout_gravity="center_vertical"
+             />
 
         <LinearLayout
-            android:layout_width="95dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/circle_tv_title"
+                android:id="@+id/comment_item_content"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="朋友圈"
+                android:text="评论"
                 android:textAppearance="@style/TextAppearance.AppCompat"
 
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/circle_tv_content"
+                android:id="@+id/comment_item_time"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="end"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:scrollHorizontally="true"
-                android:text="朋友圈"
-                android:textSize="17sp" />
+                android:text="时间"
+                android:textSize="13sp" />
 
         </LinearLayout>
 

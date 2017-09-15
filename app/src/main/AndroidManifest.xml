@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mage.magemata">
+    xmlns:tools="http://schemas.android.com/tools"
+
+    package="com.mage.magemata"
+    >
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -18,6 +21,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
+
+        tools:replace="android:icon"
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/logo2"
@@ -34,17 +39,27 @@
         </activity>
         <activity android:name=".main.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".circle.card.CircleActivity"
+        <activity android:name=".circle.AddCircleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".circle.card.AddCircle_Item_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".circle.card.Circle_Item_Activity"
             android:screenOrientation="portrait"/>
         <activity android:name=".circle.card.AddCardActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".circle.card.CardActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".circle.MyCircleActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".user.UserInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".user.ChangeUserActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".publish.usedgood.UsedGoodActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".publish.usedgood.GoodInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".util.CheckVersionActivity"
             android:screenOrientation="portrait"/>
     </application>
 

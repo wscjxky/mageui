@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        style="@style/mytoolbar"
+        android:id="@+id/toolbar"
+        />
+    <com.github.florent37.materialtextfield.MaterialTextField
+        style="@style/textfield"
+        app:mtf_labelColor="@color/hot_pink"
+        app:mtf_image="@android:drawable/ic_dialog_email">
+
+        <EditText
+            android:id="@+id/addcircle_et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="圈子名称"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+    <com.github.florent37.materialtextfield.MaterialTextField
+        style="@style/textfield"
+        app:mtf_labelColor="@color/hot_pink"
+        app:mtf_image="@android:drawable/ic_dialog_email">
+        <EditText
+            android:id="@+id/addcircle_et_content"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="圈子描述"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+    <com.github.florent37.materialtextfield.MaterialTextField
+        style="@style/textfield"
+        app:mtf_labelColor="@color/hot_pink"
+        app:mtf_image="@android:drawable/ic_dialog_email">
+
+        <EditText
+            android:id="@+id/addcircle_et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="联系方式"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        >
+
+        <TextView
+            android:text="添加图片"
+            android:textColor="@color/hot_pink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@android:drawable/ic_menu_add"
+            android:id="@+id/upload_iv_addimg"
+            android:layout_marginLeft="40dp"
+            android:contentDescription="@null"
+            android:clickable="true"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/addcircle_btn_submit"
+        android:background="@color/pink"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30.0dip"
+        android:layout_marginRight="30.0dip"
+        android:layout_marginTop="20.0dip"
+        android:text="发      布"
+        />
+</LinearLayout>

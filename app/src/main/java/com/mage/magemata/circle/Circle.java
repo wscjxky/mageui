@@ -7,18 +7,25 @@ import android.graphics.Bitmap;
  */
 
 public class Circle {
+    private int circle_id;
+
     private String title;
     private String createTime;
-    private String introduction;
+    private String content;
     private String people_count;
     private Boolean  subs= false;
-    private Bitmap logo;
-
-    public void setIntroduction(String introduction) {
-        this.introduction=introduction    ;
+    private String image;
+    public void setCircle_id(int circle_id) {
+        this.circle_id=circle_id    ;
     }
-    public String getIntroduction( ) {
-        return introduction;
+    public int getCircle_id( ) {
+        return circle_id;
+    }
+    public void setIntroduction(String content) {
+        this.content=content    ;
+    }
+    public String getContent( ) {
+        return content;
     }
     public String getTitle( ) {
         return title;
@@ -26,17 +33,11 @@ public class Circle {
     public void setTitle(String title ) {
         this.title= title;
     }
-    public void subs() {
-        this.subs=true    ;
-    }
-    public void unsubs() {
-        this.subs=false    ;
-    }
 
-    public Bitmap getLogo() {
-        return logo;
+    public String getImage() {
+        return image;
     }
-    public void setLogo(Bitmap bitmap) {
-        this.logo=bitmap;
+    public void setImage(String image) {
+        this.image=image;
     }
 }

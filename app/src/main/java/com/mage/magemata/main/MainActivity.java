@@ -27,6 +27,7 @@ import com.mage.magemata.R;
 import com.mage.magemata.circle.CircleFragment;
 import com.mage.magemata.publish.PublishFragment;
 import com.mage.magemata.user.MoreFragment;
+import com.mage.magemata.util.MyPrefence;
 import com.mage.magemata.util.PublicMethod;
 import com.vondear.rxtools.RxImageUtils;
 import com.vondear.rxtools.RxPhotoUtils;
@@ -49,14 +50,13 @@ public class MainActivity extends BaseActivity {
     private ViewPager pager;
     private MyViewPagerAdapter adapter;
     @ViewInject(R.id.main_background)
-    private RelativeLayout background;
-
+    RelativeLayout background;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initData() {
+        PublicMethod.requestPermission(this);
         getSkin();
 
-//        requestPermission(MainActivity.this);
 //        PageNavigationView tab = (PageNavigationView) findViewById(R.id.activty_navbar);
 
         NavigationController navigationController = tab.material()
@@ -74,9 +74,15 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void loadData() {
+
+    }
+
+    @Override
     public void setContentView() {
         setContentView(R.layout.activity_main);
-            setStatus(tab);
+        setStatus(tab);
+
 
     }
 
@@ -120,8 +126,8 @@ public class MainActivity extends BaseActivity {
         String back = skinSettingPreference.getString("background", "");
         Log.e("ASd",back);
         if (!Objects.equals(back, "")) {
-            Bitmap bitmap = RxImageUtils.getBitmap(back);
-            background.setBackground(RxImageUtils.bitmap2Drawable(bitmap));
+            Drawable drawable =RxImageUtils.bitmap2Drawable(RxImageUtils.getBitmap(back)) ;
+            background.setBackground(drawable);
         }
     }
 }

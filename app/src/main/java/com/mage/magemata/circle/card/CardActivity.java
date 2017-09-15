@@ -2,141 +2,238 @@ package com.mage.magemata.circle.card;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.MediaController;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.VideoView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mage.magemata.R;
 import com.mage.magemata.main.BaseActivity;
+import com.mage.magemata.user.UserInfoActivity;
+import com.mage.magemata.util.MyPrefence;
+import com.squareup.picasso.Picasso;
+import com.vondear.rxtools.RxDataUtils;
 
+import org.json.JSONObject;
+import org.xutils.common.Callback;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
+import static com.mage.magemata.constant.Constant.CIRCLE_ITEM_ID;
+import static com.mage.magemata.constant.Constant.GET_CIRCLE_ITEM;
+import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM_COMMENT;
+import static com.mage.magemata.util.PublicMethod.LOG;
+import static com.mage.magemata.util.PublicMethod.httpGet;
+import static com.mage.magemata.util.PublicMethod.httpPost;
+import static com.mage.magemata.util.PublicMethod.isJsonarray0;
+import static com.vondear.rxtools.RxKeyboardUtils.hideSoftInput;
 
 /**
  * Created by Administrator on 2017/9/8.
  */
 
 public class CardActivity  extends BaseActivity {
-    private static  int COMCOUNT = 0;
     @ViewInject(R.id.card_et_comment)
     EditText comment;
-    @ViewInject(R.id.card_lv_comment)
-    ListView commentlv;
+    @ViewInject(R.id.card_rv_comment)
+    RecyclerView recyclerView;
     @ViewInject(R.id.card_tv_count)
-    TextView commentcount;
-    @ViewInject(R.id.card_item_image)
-    ImageView imageView;
-    @ViewInject(R.id.card_vv_video)
-    VideoView videoView;
+    TextView count;
     @ViewInject(R.id.card_tv_content)
-    TextView tv_content;
+    TextView content;
     @ViewInject(R.id.card_tv_type)
-    TextView tv_type;
+    TextView type;
+    @ViewInject(R.id.card_tv_time)
+    TextView time;
 
+    private int circle_item_id=MyPrefence.getInstance(CardActivity.this).getInt(CIRCLE_ITEM_ID);
+    private  ArrayList<Circle_Item_Comment> circlelist = new ArrayList<>();
 
-    private SimpleAdapter simplead;
-    private List<Map<String, Object>> listems=new ArrayList<Map<String, Object>>();;
-    private Map<String, Object> listem;
+    private Circle_item_commentAdapter madapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        x.view().inject(this);
 
     }
 
+
     @Override
     public void initData() {
-        initCardContent();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        madapter  = new Circle_item_commentAdapter();
+        madapter.openLoadAnimation(SCALEIN);
+        madapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                madapter.getItem(position).getId();
+                Bundle bundle=new Bundle();
+                bundle.putInt("type",1);
+                UserInfoActivity.actionstart(CardActivity.this,bundle);
+            }
+        });
+        recyclerView.setAdapter(madapter);
+
+        loadComment();
+    }
+
+    @Override
+    public void loadData() {
+        httpGet(GET_CIRCLE_ITEM+"/create?circle_item_id="+circle_item_id,new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+
+                Circle_Item item=new Gson().fromJson(result.toString(), Circle_Item.class);
+                content.setText(item.getContent());
+                type.setText(item.getTitle());
+                time.setText(item.getCreateTime());
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("sdf", ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_card);
-
+        initToolbar("详细信息",true);
     }
 
-
-
-    private void initCardContent(){
-        String type = getIntent().getStringExtra("type");
-        if(type!=null) {
-            String content = getIntent().getStringExtra("content");
-            Uri uri=getIntent().getParcelableExtra("uri");
-            Bitmap bitmap = getIntent().getParcelableExtra("bitmap");
-            tv_content.setText(content);
-            tv_type.setText(type);
-
-            if (bitmap != null) {
-                imageView.setImageBitmap(bitmap);
-            }
-            if(uri!=null) {
-                videoView.setVisibility(View.VISIBLE);
-                Log.e("sdf",uri.toString());
-                videoView.setMediaController(new MediaController(this));
-                videoView.setVideoURI(uri);
-                videoView.start();
-            }
-        }
-    }
 
 
     @Event(value = R.id.card_bt_comment ,type=View.OnClickListener.class)
     private void addComment(View view){
-        String ct=comment.getText().toString();
-        listem = new HashMap<String, Object>();
-        listem.put("user","第二个用户");
-        listem.put("comment", ct);
-        listem.put("time", "2017-04-30 12:00:23");
-        listems.add(listem);
-        Log.e("","sadf");
-        simplead.notifyDataSetChanged();
-        comment.setText("");
-        commentcount.setText("评论("+(COMCOUNT+=1)+")");
+        String s=comment.getText().toString();
+        MyPrefence prefence=MyPrefence.getInstance(CardActivity.this);
+        Map<String, String> map= new HashMap<String,String> ();
+        map.put("user_id",prefence.getUser().getId()+"");
+        map.put("content",s);
+        map.put("circle_item_id",prefence.getInt(CIRCLE_ITEM_ID)+"");
+
+        httpPost(POST_CIRCLE_ITEM_COMMENT, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                loadData();
+                showSuccToast("评论成功");
+                hideSoftInput(CardActivity.this);
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("没有东西", ex.toString());
+
+            }
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
-//    private void setAdapter(){
-//        simplead = new SimpleAdapter(CardActivity.this, listems,
-//                R.layout.card_item, new String[]{"user", "comment", "time"},
-//                new int[]{R.id.card_user, R.id.card_tv_content, R.id.card_time}){
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                final View view = super.getView(position, convertView, parent);
-//                ImageView usePortrait = (ImageView) view.findViewById(R.id.card_iv_userportrait);
-//                usePortrait.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        UserInfoActivity.actionStart(CardActivity.this);
-//                    }
-//                });
-//                return view;
-//            }
-//        };
-//        commentlv.setAdapter(simplead);
-//    }
 
     static public void actionStart(Context context){
         Intent intent=new Intent(context,CardActivity.class);
-
         context.startActivity(intent);
     }
+    private  void loadComment(){
+        LOG(POST_CIRCLE_ITEM_COMMENT+"/"+circle_item_id);
+        httpGet(POST_CIRCLE_ITEM_COMMENT+"/"+circle_item_id, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                LOG(result);
+                circlelist.clear();
+                switch (isJsonarray0(result)){
+                    case 0:
+                        circlelist = new Gson().fromJson(result, new TypeToken<ArrayList<Circle_Item_Comment>>() {
+                        }.getType());
+                        count.setText("评论("+circlelist.size()+")");
+                        madapter.setNewData(circlelist);
+                        break;
+                    case 1:
+                        Circle_Item_Comment item= new Gson().fromJson(result,Circle_Item_Comment.class);
+                        count.setText("评论(1)");
+                        madapter.addData(item);
+                        break;
+                    default:
+                        Log.e("没有东西", "As");
+                        break;
+                }
+                madapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("没有东西", ex+"");
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+
+
+
+
+    public class Circle_item_commentAdapter  extends BaseQuickAdapter<Circle_Item_Comment, BaseViewHolder> {
+        public Circle_item_commentAdapter() {
+
+            super(R.layout.comment_item);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, Circle_Item_Comment item) {
+            if(!RxDataUtils.isNullString(item.getImage())) {
+                Picasso.with(CardActivity.this)
+                        .load(item.getImage())
+                        .resize(150, 150)
+                        .centerCrop()
+                        .into((CircleImageView) helper.getView(R.id.comment_item_image));
+            }
+            helper.setText(R.id.comment_item_content, item.getContent());
+            helper.setText(R.id.comment_item_time, item.getTime())
+
+                    .addOnClickListener(R.id.comment_item_image);
+        }
+    }
 }

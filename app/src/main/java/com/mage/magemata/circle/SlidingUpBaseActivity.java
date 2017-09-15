@@ -21,6 +21,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -32,13 +34,33 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
 import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
+import com.google.gson.Gson;
 import com.mage.magemata.R;
+import com.mage.magemata.util.MyPrefence;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+
+import java.util.Map;
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
+
+import static com.mage.magemata.constant.Constant.CIRCLE_ID;
+import static com.mage.magemata.constant.Constant.FOLLOW_USER_ID;
+import static com.mage.magemata.constant.Constant.GET_CIRCLE;
+import static com.mage.magemata.constant.Constant.ROOT_URL;
+import static com.mage.magemata.constant.Constant.T_CIRCLE_ID;
+import static com.mage.magemata.constant.Constant.USER_ID;
+import static com.mage.magemata.constant.Constant.VALUE_CIRCLE_ID;
+
+import static com.mage.magemata.util.PublicMethod.getMap;
+import static com.mage.magemata.util.PublicMethod.httpGet;
+import static com.mage.magemata.util.PublicMethod.httpPost;
 
 public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecActivity implements ObservableScrollViewCallbacks {
 
@@ -46,7 +68,7 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
     private static final int SLIDING_STATE_TOP = 0;
     private static final int SLIDING_STATE_MIDDLE = 1;
     private static final int SLIDING_STATE_BOTTOM = 2;
-
+    private String subscribe_url=ROOT_URL+"usersubscribe";
     private View mHeader;
     private View mHeaderBar;
     private View mHeaderOverlay;
@@ -85,8 +107,39 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
     private boolean mHeaderColorChangedToBottom;
     private boolean mHeaderIsAtBottom;
     private boolean mHeaderIsNotAtBottom;
-
     private String title="哈利波特";
+    private ActionBar ab;
+
+    private void loadData(){
+        String circle_id= MyPrefence.getInstance(this).getInt(CIRCLE_ID)+"";
+        VALUE_CIRCLE_ID=circle_id;
+        httpGet(GET_CIRCLE+"/"+ circle_id,new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Circle item=new Gson().fromJson(result.toString(), Circle.class);
+                ab.setTitle(item.getTitle());
+                mToolbar.setTitle(item.getTitle());
+                mTitle.setText(item.getContent());
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("sdf", ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +149,8 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         ViewHelper.setScaleY(mToolbar, 0);
-        ActionBar ab = getSupportActionBar();
+        ab = getSupportActionBar();
         if (ab != null) {
-            ab.setHomeButtonEnabled(true);
-            ab.setDisplayHomeAsUpEnabled(true);
             ab.setTitle(title);
         }
 
@@ -133,11 +184,36 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
         button_heart.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(View view, boolean checked) {
+                Map<String, String> map = getMap();
+                map.put(USER_ID, MyPrefence.getInstance(SlidingUpBaseActivity.this).getUserId() + "");
+                map.put(T_CIRCLE_ID, MyPrefence.getInstance(SlidingUpBaseActivity.this).getInt(CIRCLE_ID) + "");
+                httpPost(subscribe_url, map, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        if (Objects.equals(result, "ok")) {
+                            Toasty.success(SlidingUpBaseActivity.this,"关注成功" + "").show();
+                        } else {
+                            Toasty.error(SlidingUpBaseActivity.this, "取消关注").show();
+                            button_heart.setChecked(false);
+                        }
+                    }
 
-                    Toasty.success(SlidingUpBaseActivity.this,"关注成功").show();
-                }
-        });
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
 
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }});
         mFabMargin = getResources().getDimensionPixelSize(R.dimen.margin_standard);
 
         mInterceptionLayout = (TouchInterceptionFrameLayout) findViewById(R.id.scroll_wrapper);
@@ -162,6 +238,7 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
                 changeSlidingState(mSlidingState, false);
             }
         });
+        loadData();
     }
 
     @Override
@@ -498,4 +575,13 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
     private float getAnchorYImage() {
         return mImageView.getHeight();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home) {
+            finish();
+        }
+        return true;
+    }
+
 }

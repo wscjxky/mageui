@@ -81,6 +81,11 @@ public class UsedGoodActivity extends BaseActivity {
     }
 
     @Override
+    public void loadData() {
+
+    }
+
+    @Override
     public void setContentView() {
         setContentView(R.layout.activity_used);
     }
@@ -128,9 +133,7 @@ public class UsedGoodActivity extends BaseActivity {
                 stage=true;
                 helper.setImageResource(R.id.good_item_logo, R.drawable.food4);
             }
-            if(item.getLogo()!=null) {
-                helper.setImageBitmap(R.id.good_item_logo, item.getLogo());
-            }
+
             helper.setText(R.id.good_name, item.getTitle());
         }
 

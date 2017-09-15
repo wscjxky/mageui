@@ -15,21 +15,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     />
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/more_userview"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@mipmap/logo2"
-        app:civ_border_color="#FF000000"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp" />
+
 
     <LinearLayout style="@style/wrap_layout"
         android:alpha="0.9"
         android:id="@+id/linearLayout2"
-        android:layout_marginTop="66dp"
-        android:layout_below="@+id/more_userview"
+        android:layout_marginTop="170dp"
         android:layout_centerHorizontal="true">
         <!-- 上圆角-->
         <LinearLayout style="@style/top_layout"
@@ -45,12 +36,12 @@
         <!-- 无圆角-->
         <LinearLayout style="@style/mid_layout">
             <TextView style="@style/usertext" android:text="修改皮肤"
-                android:id="@+id/more_gpa" />
+                android:id="@+id/more_linel_changeskin" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
         <View style="@style/bg_line"/>
         <LinearLayout style="@style/mid_layout"
-            android:id="@+id/more_linel_changeskin"
+            android:id="@+id/more_gpa"
             android:clickable="true"
             >
             <TextView style="@style/usertext"
@@ -61,12 +52,21 @@
         </LinearLayout>
         <View style="@style/bg_line"/>
         <!-- 下圆角-->
+
+        <!-- 下圆角-->
         <LinearLayout style="@style/bottom_layout">
             <TextView style="@style/usertext" android:text="常用信息"
                 android:id="@+id/more_linel_otherinfo" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
+        <View style="@style/bg_line"/>
 
+        <LinearLayout style="@style/bottom_layout"
+            android:id="@+id/more_linel_setting" >
+            <TextView style="@style/usertext" android:text="设置"
+                />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

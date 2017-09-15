@@ -23,6 +23,11 @@ public class GoodInfoActivity  extends BaseActivity{
     }
 
     @Override
+    public void loadData() {
+
+    }
+
+    @Override
     public void setContentView() {
             setContentView(R.layout.activity_goodinfo);
             setStatus(view);
