@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.mage.magemata.R;
 import com.mage.magemata.circle.CircleFragment;
+import com.mage.magemata.user.User;
+import com.mage.magemata.util.MyPrefence;
 import com.mage.magemata.util.MySweetAlertDialog;
 import com.vondear.rxtools.RxNetUtils;
 
@@ -80,7 +82,13 @@ public abstract class BaseFragment extends Fragment {
     //为View设置数据
     protected abstract void setData();
 
-
+    //获取用户信息
+    protected String getUserId(){
+        return MyPrefence.getInstance(mAppCompatActivity).getUserId();
+    }
+    protected User getUserInfo(){
+        return MyPrefence.getInstance(mAppCompatActivity).getUser();
+    }
     //初始化toolbar
     public void initToolbar(String title, boolean isDisplayHomeAsUp) {
         Toolbar toolbar= (Toolbar) view.findViewById(R.id.toolbar);

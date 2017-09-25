@@ -66,54 +66,51 @@ public class ChangeUserActivity extends BaseActivity {
         if (TextUtils.isEmpty(username.getText().toString()) || TextUtils.isEmpty(school.getText().toString())) {
             showErrorToast("不可为空哦");
         } else {
-            final SweetAlertDialog dialog=getConfirmDialog();
-            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            getConfirmDialog().setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("username",user.getName() );
-                    map.put("user_id",user.getId()+"" );
-                    map.put("phone", phone.getText().toString());
-                    map.put("name", username.getText().toString());
-                    map.put("college", school.getText().toString());
-                    map.put("profile", uploadimage_URL);
-                    Log.e("image_url",uploadimage_URL);
-                    httpPost(url, map, new Callback.CommonCallback<String>() {
-                        @Override
-                        public void onSuccess(String result) {
-                            Log.e("result",result);
-                            showSuccToast("成功啦");
-                            finish();
-                        }
-
-                        @Override
-                        public void onError(Throwable ex, boolean isOnCallback) {
-                            Log.e("finish",ex.toString());
-                            showErrorToast("失败了");
-
-                        }
-
-                        @Override
-                        public void onCancelled(CancelledException cex) {
-
-                        }
-
-                        @Override
-                        public void onFinished() {
-
-                        }
-                    });
+                    post();
+                    finish();
                 }
-            });
-            dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    dialog.cancel();
-                }
-            });
-            dialog.show();
-
+            })
+                    .show();
         }
+    }
+    private void post() {
+
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("username", user.getuserName());
+        map.put("user_id", getUserId());
+        map.put("phone", phone.getText().toString());
+        map.put("name", username.getText().toString());
+        map.put("college", school.getText().toString());
+        map.put("profile", uploadimage_URL);
+        Log.e("image_url", uploadimage_URL);
+        httpPost(url, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("result", result);
+                showSuccToast("成功啦");
+                finish();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("finish", ex.toString());
+                showErrorToast("失败了");
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 }

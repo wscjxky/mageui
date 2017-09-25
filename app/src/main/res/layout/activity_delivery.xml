@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/mytoolbar">
+    </android.support.v7.widget.Toolbar>
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="166dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        style="@style/wrap_layout"
+        android:layout_height="170dp"
+        android:layout_below="@+id/more_userview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+        <!-- 上圆角-->
+        <LinearLayout
+            android:id="@+id/delivery_linel_rice"
+            style="@style/top_layout">
+
+            <TextView
+                android:id="@+id/delivery_rice"
+                style="@style/usertext"
+                android:text="帮带饭" />
+
+            <ImageView style="@style/img_arrow" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <View style="@style/bg_line" />
+        <!-- 无圆角-->
+        <LinearLayout
+            android:id="@+id/delivery_linel_shop"
+            style="@style/mid_layout">
+
+            <TextView
+                android:id="@+id/delivery_shop"
+                style="@style/usertext"
+                android:text="帮购物" />
+
+            <ImageView style="@style/img_arrow" />
+        </LinearLayout>
+
+
+        <View style="@style/bg_line" />
+        <!-- 下圆角-->
+        <LinearLayout
+            android:id="@+id/delivery_linel_express"
+            style="@style/bottom_layout">
+
+            <TextView
+                android:id="@+id/delivery_express"
+                style="@style/usertext"
+                android:text="帮取快递" />
+
+            <ImageView style="@style/img_arrow" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="说明：校内快递费1金币"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+</LinearLayout>

@@ -36,6 +36,7 @@ import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
 import static com.mage.magemata.constant.Constant.CIRCLE_ITEM_ID;
 import static com.mage.magemata.constant.Constant.GET_CIRCLE_ITEM;
 import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM_COMMENT;
+import static com.mage.magemata.constant.Constant.USER_ID;
 import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.httpGet;
 import static com.mage.magemata.util.PublicMethod.httpPost;
@@ -80,9 +81,11 @@ public class CardActivity  extends BaseActivity {
         madapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                madapter.getItem(position).getId();
+
                 Bundle bundle=new Bundle();
                 bundle.putInt("type",1);
+                bundle.putInt("user_id", madapter.getItem(position).getId());
+
                 UserInfoActivity.actionstart(CardActivity.this,bundle);
             }
         });
@@ -133,7 +136,7 @@ public class CardActivity  extends BaseActivity {
         String s=comment.getText().toString();
         MyPrefence prefence=MyPrefence.getInstance(CardActivity.this);
         Map<String, String> map= new HashMap<String,String> ();
-        map.put("user_id",prefence.getUser().getId()+"");
+        map.put("user_id",getUserId());
         map.put("content",s);
         map.put("circle_item_id",prefence.getInt(CIRCLE_ITEM_ID)+"");
 

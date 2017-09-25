@@ -7,6 +7,7 @@ package com.mage.magemata.circle.card;
 class Circle_Item {
     private int circle_item_id;
     private int circle_id;
+    private int user_id;
 
     private String title;
     private String createTime;
@@ -14,6 +15,9 @@ class Circle_Item {
     private String people_count;
     private String image;
     private String user_image;
+    public int getUserid( ) {
+        return user_id;
+    }
     public int getId( ) {
         return circle_item_id;
     }

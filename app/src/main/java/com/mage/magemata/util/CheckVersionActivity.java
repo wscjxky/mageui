@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.adapter.Call;
@@ -20,11 +21,18 @@ import com.vondear.rxtools.RxDeviceUtils;
 import com.vondear.rxtools.RxFileUtils;
 import com.vondear.rxtools.view.RxToast;
 
+import org.xutils.common.Callback;
+
 import java.io.File;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.ProgressHelper;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
+
+import static com.mage.magemata.constant.Constant.ROOT_URL;
+import static com.mage.magemata.util.PublicMethod.LOG;
+import static com.mage.magemata.util.PublicMethod.httpGet;
 
 /**
  * Created by Administrator on 2017/9/13.
@@ -32,17 +40,46 @@ import es.dmoral.toasty.Toasty;
 
 public class CheckVersionActivity extends BaseActivity {
     boolean update = false;
+    private String check_url=ROOT_URL+"download/";
+    private String download_url=check_url+"download";
+    private String version;
+    private String temp;
 
     @Override
     public void initData() {
 //
-        String temp = getResources().getString(R.string.newest_apk_down);
-        String timeTip = String.format(temp, RxDeviceUtils.getAppVersionName(CheckVersionActivity.this));
-        ShowDialog(timeTip,"http://7xss53.com1.z0.glb.clouddn.com/okhttputils/okgo_v2.0.0.apk");
+         temp = getResources().getString(R.string.newest_apk_down);
+        version=RxDeviceUtils.getAppVersionName(CheckVersionActivity.this);
     }
 
     @Override
     public void loadData() {
+        httpGet(check_url, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if( !Objects.equals(version, result)){
+                    ShowDialog("您当前版本为"+ version+", 发现最新版本"+result+"是否更新?");
+                }
+                else{
+                    showSuccToast("您是最新的版本啦，尽情享用吧");
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                    LOG(ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     @Override
@@ -59,13 +96,13 @@ public class CheckVersionActivity extends BaseActivity {
          */
 
 
-        private void ShowDialog(String strAppVersionName, final String apk_down_url) {
+        private void ShowDialog(String strAppVersionName) {
             final SweetAlertDialog dialog= getConfirmDialog();
             dialog.setContentText(strAppVersionName);
             dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    getFile(apk_down_url);
+                    getFile(download_url);
                     dialog.cancel();
                 }
             });
@@ -89,7 +126,6 @@ public class CheckVersionActivity extends BaseActivity {
         pDialog.setCancelable(true);
         pDialog.show();
         final ProgressHelper helper=pDialog.getProgressHelper();
-
         OkGo.<File>get(url)//
                 .tag(this)//
                 .execute(new FileCallback() {

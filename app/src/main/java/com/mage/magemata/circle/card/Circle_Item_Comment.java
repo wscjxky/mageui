@@ -6,11 +6,17 @@ package com.mage.magemata.circle.card;
 
 public class Circle_Item_Comment {
     private int comment_id;
+    private int user_id;
     private int circle_item_id;
     private String createtime;
     private String content;
     private String image;
     private String user_image;
+
+
+    public int getUserId( ) {
+        return user_id;
+    }
 
     public String getTime( ) {
         return createtime;

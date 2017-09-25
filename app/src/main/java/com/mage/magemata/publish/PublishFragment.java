@@ -1,62 +1,51 @@
 package com.mage.magemata.publish;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import com.mage.magemata.R;
+import com.mage.magemata.main.BaseFragment;
+import com.mage.magemata.publish.delivery.DeliveryActivity;
 import com.mage.magemata.publish.usedgood.UsedGoodActivity;
-
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 
 /**
  * Created by Administrator on 2017/4/24.
  */
 
-public class PublishFragment extends Fragment {
-    private Activity activity;
+@ContentView(R.layout.fragment_publish)
+public class PublishFragment extends BaseFragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mview = inflater.inflate(R.layout.fragment_publish, container, false);
-        activity=getActivity();
-        setListener(mview);
-        return mview;
+    protected void initData() {
+
     }
 
-    private  void setListener(View mview){
-        mview.findViewById(R.id.publish_iv_lost).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                LostActivity.actionStart(activity);
-            }
-        });
-        mview.findViewById(R.id.publish_iv_used).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UsedGoodActivity.actionStart(activity);
-            }
-        });
-        mview.findViewById(R.id.publish_iv_join).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                JoinGoodActivity.actionStart(activity);
-            }
-        });
-        mview.findViewById(R.id.publish_iv_print).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                PrintActivity.actionStart(activity);
-            }
-        });
-        mview.findViewById(R.id.publish_iv_findwork).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                DeliveryActivity.actionStart(activity);
-            }
-        });
+    @Override
+    protected void setData() {
+
     }
+
+    @Event(R.id.publish_iv_lost)
+    private void lost(View view){
+        //                LostActivity.actionStart(activity);
+    }
+    @Event(R.id.publish_iv_used)
+    private void user(View view){
+        readyGo(UsedGoodActivity.class);
+    }
+    @Event(R.id.publish_iv_join)
+    private void join(View view){
+//                JoinGoodActivity.actionStart(activity);
+    }
+    @Event(R.id.publish_iv_print)
+    private void print(View view){
+        //                LostActivity.actionStart(activity);
+    }
+    @Event(R.id.publish_iv_findwork)
+    private void findword(View view){
+            readyGo(DeliveryActivity.class);
+    }
+
 
 }

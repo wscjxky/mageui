@@ -35,15 +35,17 @@ import org.xutils.x;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import es.dmoral.toasty.Toasty;
 import shem.com.materiallogin.DefaultLoginView;
 import shem.com.materiallogin.DefaultRegisterView;
 import shem.com.materiallogin.MaterialLoginView;
 
 import static com.mage.magemata.constant.Constant.GET_USERLOGIN;
 import static com.mage.magemata.constant.Constant.POST_USERREGISET;
-import static com.mage.magemata.constant.Constant.VALUE_USER_ID;
+import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 import static com.mage.magemata.util.PublicMethod.isJsonarray0;
 
@@ -58,14 +60,16 @@ public class LoginActivity extends BaseActivity {
     private View mViewNeedOffset;
     private MyPrefence myPrefence;
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+        PublicMethod.requestPermission(this);
         super.onCreate(savedInstanceState);
         initEvent();
         setStatus(mViewNeedOffset);
-        PublicMethod.requestPermission(this);
 
     }
 
@@ -92,15 +96,17 @@ public class LoginActivity extends BaseActivity {
                     httpPost(GET_USERLOGIN, userinfo, new Callback.CommonCallback<JSONObject>() {
                         @Override
                         public void onSuccess(JSONObject result) {
-                            User user=new Gson().fromJson(String.valueOf(result), User.class);
+                            LOG(result.toString());
+                            showSuccToast("登陆成功!");
+                            User user=new Gson().fromJson(result.toString(), User.class);
                             myPrefence.saveUser(user);
-                            VALUE_USER_ID=user.getId()+"";
                             MainActivity.actionstart(LoginActivity.this);
                             finish();
                         }
 
                         @Override
                         public void onError(Throwable ex, boolean isOnCallback) {
+                            LOG(ex.toString());
                             showErrorToast("用户密码输入错误了");
                         }
 
@@ -111,7 +117,7 @@ public class LoginActivity extends BaseActivity {
 
                         @Override
                         public void onFinished() {
-                            showSuccToast("登陆成功!");
+
                         }
                     });
                 }
@@ -128,14 +134,21 @@ public class LoginActivity extends BaseActivity {
                     Map<String, String> userinfo = new HashMap<String, String>();
                     userinfo.put("username", registerUser.getEditText().getText().toString());
                     userinfo.put("password", registerPass.getEditText().getText().toString());
-                    httpPost(POST_USERREGISET, userinfo, new Callback.CommonCallback<JSONObject>() {
+                    httpPost(POST_USERREGISET, userinfo, new Callback.CommonCallback<String>() {
                         @Override
-                        public void onSuccess(JSONObject result) {
-                            showSuccToast("注册成功快去登录");
+                        public void onSuccess(String result) {
+                            LOG(result);
+                            if(result.contains("exist")){
+                                showErrorToast("用户名已存在");
+
+                            }
+                            else
+                                showSuccToast("注册成功快去登录");
                         }
 
                         @Override
                         public void onError(Throwable ex, boolean isOnCallback) {
+                            LOG(ex.toString());
                             showErrorToast("网络出错了");
 
                         }
@@ -174,25 +187,25 @@ public class LoginActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initEvent() {
         String path= Environment.getExternalStorageDirectory().getPath() + "/test.mp4";
-        String url="http://gslb.miaopai.com/stream/Q8Rea0w4QCO8uqh3ZufQhLxyCh8T0w~b5EjYvw__.mp4";
+        String url="http://gslb.miaopai.com/stream/AUxY6qmkBRu-4GxzO8uKpF6gd770Stjb.mp4";
         File file=new File(path);
         final Uri uri = Uri.parse(url);
         if (!file.exists()) {
             Toast.makeText(this, "视频文件路径错误", Toast.LENGTH_SHORT).show();
         }else {
-//            final android.widget.MediaController mp=new android.widget.MediaController(this);
-//            mp.setVisibility(View.INVISIBLE);
-//            videoView.setMediaController(mp);
-//            videoView.setClickable(false);
-//            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                @Override
-//                public void onCompletion(MediaPlayer mediaPlayer) {
-//                    videoView.setVideoURI(uri);
-//                    videoView.start();
-//                }
-//            });
-//            videoView.setVideoURI(uri);
-//            videoView.start();
+            final android.widget.MediaController mp=new android.widget.MediaController(this);
+            mp.setVisibility(View.INVISIBLE);
+            videoView.setMediaController(mp);
+            videoView.setClickable(false);
+            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    videoView.setVideoURI(uri);
+                    videoView.start();
+                }
+            });
+            videoView.setVideoURI(uri);
+            videoView.start();
         }
     }
 

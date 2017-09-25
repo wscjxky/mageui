@@ -12,8 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.mage.magemata.R;
+import com.mage.magemata.circle.AddCircleActivity;
 import com.mage.magemata.main.BaseActivity;
 import com.mage.magemata.user.MoreFragment;
+import com.mage.magemata.util.MyPrefence;
 import com.vondear.rxtools.RxImageUtils;
 import com.vondear.rxtools.RxPhotoUtils;
 
@@ -30,6 +32,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 import static com.mage.magemata.constant.Constant.GET_CIRCLE_ITEM;
@@ -37,7 +40,6 @@ import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM;
 import static com.mage.magemata.constant.Constant.ROOT_URL;
 import static com.mage.magemata.constant.Constant.UPLOAD;
 import static com.mage.magemata.constant.Constant.VALUE_CIRCLE_ID;
-import static com.mage.magemata.constant.Constant.VALUE_USER_ID;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 import static com.vondear.rxtools.RxFileUtils.getFileAllSize;
 
@@ -51,8 +53,7 @@ public class AddCircle_Item_Activity extends BaseActivity {
     EditText title;
     @ViewInject(R.id.addcard_et_content)
     EditText content;
-    @ViewInject(R.id.addcard_iv_addimg)
-    ImageView imageview;
+
 
 
     @Override
@@ -70,10 +71,9 @@ public class AddCircle_Item_Activity extends BaseActivity {
         setContentView(R.layout.activity_addcard);
         initToolbar("添加消息", true);
     }
-    @Event(R.id.addcard_iv_addimg)
+    @Event(R.id.upload_iv_addimg)
     private void addImage(View view){
-        RxPhotoUtils.openLocalImage(this);
-
+        openImageIntent();
     }
 
     @Event(R.id.addcard_btn_submit)
@@ -81,38 +81,15 @@ public class AddCircle_Item_Activity extends BaseActivity {
         if (TextUtils.isEmpty(title.getText().toString()) || TextUtils.isEmpty(content.getText().toString())) {
             showErrorToast("不可为空哦");
         } else {
-            showLoadingDialog();
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("circle_id", VALUE_CIRCLE_ID);
-            map.put("title", title.getText().toString());
-            map.put("content", content.getText().toString());
-            map.put("type", "文字");
-            map.put("user_id", VALUE_USER_ID);
-            httpPost(url, map, new Callback.CommonCallback<String>() {
+            getConfirmDialog().setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
-                public void onSuccess(String result) {
-                    showSuccToast("成功啦");
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    post();
                     finish();
                 }
+            })
+                    .show();
 
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
-                    showSuccToast("失败了");
-
-                }
-
-                @Override
-                public void onCancelled(CancelledException cex) {
-
-                }
-
-                @Override
-                public void onFinished() {
-                    cancelLoadingDialog();
-
-                }
-
-            });
         }
     }
 
@@ -121,5 +98,35 @@ public class AddCircle_Item_Activity extends BaseActivity {
         Intent intent=new Intent(context,AddCircle_Item_Activity.class);
         context.startActivity(intent);
     }
+    private void  post(){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("circle_id", VALUE_CIRCLE_ID);
+        map.put("title", title.getText().toString());
+        map.put("content", content.getText().toString());
+        map.put("type", "文字");
+        map.put("user_id", MyPrefence.getInstance(AddCircle_Item_Activity.this).getUserId()+"");
+        httpPost(url, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                showSuccToast("成功啦");
+                finish();
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                showSuccToast("失败了");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+        });
+    }
 }

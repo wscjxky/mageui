@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.mage.magemata.R;
 import com.mage.magemata.main.BaseActivity;
+import com.mage.magemata.util.MyPrefence;
+import com.mage.magemata.util.MySweetAlertDialog;
 import com.vondear.rxtools.RxPhotoUtils;
 
 import org.xutils.common.Callback;
@@ -19,12 +21,13 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.mage.magemata.constant.Constant.POST_CIRCLE;
 import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM;
 import static com.mage.magemata.constant.Constant.VALUE_CIRCLE_ID;
-import static com.mage.magemata.constant.Constant.VALUE_USER_ID;
+import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 
 /**
@@ -65,39 +68,17 @@ public class AddCircleActivity extends BaseActivity {
     private void submit(View view) {
         if (TextUtils.isEmpty(title.getText().toString()) || TextUtils.isEmpty(content.getText().toString())) {
             showErrorToast("不可为空哦");
-        } else {
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("title", title.getText().toString());
-            map.put("content", content.getText().toString());
-            map.put("image", uploadimage_URL);
-            Log.e("image_url",uploadimage_URL);
-            Log.e("content",content.getText().toString());
+        }
 
-            httpPost(url, map, new Callback.CommonCallback<String>() {
+        else {
+            getConfirmDialog().setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
-                public void onSuccess(String result) {
-                    Log.e("result",result);
-                    showSuccToast("成功啦");
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    post();
                     finish();
                 }
-
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
-                    Log.e("finish",ex.toString());
-                    showErrorToast("失败了");
-
-                }
-
-                @Override
-                public void onCancelled(CancelledException cex) {
-
-                }
-
-                @Override
-                public void onFinished() {
-
-                }
-            });
+            })
+                    .show();
         }
     }
 
@@ -105,5 +86,36 @@ public class AddCircleActivity extends BaseActivity {
         Intent intent = new Intent(context, AddCircleActivity.class);
         context.startActivity(intent);
     }
+    private void post(){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("title", title.getText().toString());
+        map.put("content", content.getText().toString());
+        map.put("image", uploadimage_URL);
+        map.put("user_id", MyPrefence.getInstance(AddCircleActivity.this).getUserId()+"");
+        httpPost(url, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("result",result);
+                showSuccToast("成功啦");
+                finish();
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("finish",ex.toString());
+                showErrorToast("失败了");
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
 }

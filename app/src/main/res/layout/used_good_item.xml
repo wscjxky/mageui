@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="10dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginTop="2dp"
-    app:cardCornerRadius="12dp"
+    app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
     app:cardBackgroundColor="@color/lavenderblush"
     app:elevation="1dp">
@@ -25,10 +25,9 @@
             android:id="@+id/good_item_logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:background="@drawable/food1"
+            android:adjustViewBounds="true"
 
-            android:adjustViewBounds="true"/>
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/good_name"
@@ -45,6 +44,7 @@
             android:layout_height="wrap_content"
             android:text="发布者名称"
             android:textAlignment="textEnd" />
+
         <TextView
             android:id="@+id/good_time"
             android:layout_width="match_parent"

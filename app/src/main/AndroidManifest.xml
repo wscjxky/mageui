@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
-    package="com.mage.magemata"
-    >
+    package="com.mage.magemata">
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -21,7 +17,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
-
         tools:replace="android:icon"
         android:name=".App"
         android:allowBackup="true"
@@ -33,7 +28,6 @@
         <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -59,7 +53,17 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".publish.usedgood.GoodInfoActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".publish.usedgood.AddGoodActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".util.CheckVersionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.delivery.DeliveryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.delivery.ExpressActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.delivery.rice.RiceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.delivery.RiceConfirmActivity"
             android:screenOrientation="portrait"/>
     </application>
 

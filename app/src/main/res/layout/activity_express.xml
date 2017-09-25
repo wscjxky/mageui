@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <android.support.v7.widget.Toolbar
+      style="@style/mytoolbar"
+        android:id="@+id/toolbar">
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="20.0dip"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="5.0dip"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:text="收货地址 :"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <EditText
+                android:id="@+id/addcircle_ciclename"
+                android:hint=""
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginLeft="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:text="送达时间 :"
+                android:layout_width="wrap_content" />
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/addcircle_username"
+                android:hint="年/月/日"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginLeft="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="快递公司:" />
+
+            <EditText
+
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/addcircle_phone"
+                android:hint="顺丰" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="快递单号:" />
+
+            <EditText
+
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/express_et_number"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="收货人姓名:" />
+
+            <EditText
+
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/express_et_name"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="备注:" />
+
+
+
+        </LinearLayout>
+        <EditText
+
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            />
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        >
+        <Button
+            android:id="@+id/express_btn_submit"
+            android:background="@color/yellow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="确      定"
+            />
+    </LinearLayout>
+</LinearLayout>

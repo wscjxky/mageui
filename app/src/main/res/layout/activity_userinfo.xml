@@ -29,12 +29,12 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center_horizontal"
-        app:layout_anchor="@+id/userinfo_tl_tabs"
+        android:background="@mipmap/logo2"
         android:elevation="8dp"
-        app:layout_scrollFlags="scroll"
+        app:layout_anchor="@+id/userinfo_tl_tabs"
         app:layout_anchorGravity="top|center_horizontal"
 
-        />
+        app:layout_scrollFlags="scroll" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/userinfo_al_appbar"
@@ -67,8 +67,8 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
-                android:visibility="invisible"
-                android:text="笔" />
+                android:text="笔"
+                android:visibility="invisible" />
 
             <com.sackcentury.shinebuttonlib.ShineButton
                 android:id="@+id/userinfo_but_follow"

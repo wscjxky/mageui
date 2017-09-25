@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.mage.magemata.R;
+import com.mage.magemata.user.User;
 import com.mage.magemata.user.UserInfoActivity;
 import com.mage.magemata.util.MyPrefence;
 import com.mage.magemata.util.MySweetAlertDialog;
@@ -37,6 +38,7 @@ import com.vondear.rxtools.RxPhotoUtils;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -51,6 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
 import static com.mage.magemata.constant.Constant.UPLOAD;
+import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.zipImage;
 import static com.vondear.rxtools.RxImageUtils.getBitmap;
 import static com.vondear.rxtools.RxPhotoUtils.GET_IMAGE_FROM_PHONE;
@@ -63,20 +66,23 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 //            x.view().inject(this);
 
-//    protected MySweetAlertDialog mDialog;
     @ViewInject(R.id.upload_iv_addimg)
     CircleImageView uploadimg;
     public String uploadimage_URL;
     Toasty mToast;
     private MySweetAlertDialog mDialog;
+    protected static int CURRENT_GOOD_ID;
+    protected static int CURRENT_CIRCLE_ID;
 
+
+    //加载背景条
     @Override
     protected void onResume() {
-        SkinManager skinManager = new SkinManager(this);
-
-        skinManager.getSkin();
+//        SkinManager skinManager = new SkinManager(this);
+//        skinManager.getSkin();
         super.onResume();
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,28 +93,45 @@ public abstract class BaseActivity extends AppCompatActivity {
         checkInternet();
         initData();
         loadData();
-
     }
 
     public void ShowToast(String text) {
         Toasty.success(this, text, Toast.LENGTH_SHORT, true).show();
-
     }
+
     public abstract void setContentView();
 
     public abstract void initData();
     public abstract void loadData();
 
+    protected Bundle setBundle(String key,int value){
+        Bundle bundle=new Bundle();
+        bundle.putInt(key,value);
+        return bundle;
+    }
+    protected int getBundleid(String key){
+        Bundle bundle=new Bundle();
+        return bundle.getInt(key);
+    }
 
-    protected int getUserId(){
+    //获取用户信息
+    protected String getUserId(){
         return MyPrefence.getInstance(this).getUserId();
     }
+    protected User getUserInfo(){
+        return MyPrefence.getInstance(this).getUser();
+    }
+
+    //打开imagepick
+
     protected void openImageIntent(){
         Intent intent;
         intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, GET_IMAGE_FROM_PHONE);
     }
 
+    //打开上传图片
+    //需要压缩后的最终图片地址
     public  void upLoadImage(String path,Callback.CommonCallback<String> callback) throws IOException {
         final File file = new File(zipImage(path));
         RequestParams params=new RequestParams(UPLOAD);
@@ -121,7 +144,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         x.http().post(params, callback);
     }
 
-
+    //添加图片
+    @Event(R.id.upload_iv_addimg)
+    private void addImage(View view) {
+        openImageIntent();
+    }
+    //图片回馈
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -165,14 +193,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+    //沉浸式
     public void setStatus(View view) {
         StatusBarUtil.setTranslucentForImageView(this, 0, view);
     }
 
-//    public static void actionstart(Context context){
-//        Intent intent=new Intent(context,MainActivity.class);
-//        context.startActivity(intent);
-//    }
 
     //初始化Toolbar
     protected Toolbar initToolbar(String title, boolean isDisplayHomeAsUp) {
@@ -195,6 +220,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (null == mDialog) {
             mDialog = new MySweetAlertDialog(this);
         }
+
         return mDialog.getConfirmDialog();
     }
     protected void showLoadingDialog() {
@@ -250,6 +276,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             mDialog = new MySweetAlertDialog(this);
         }
         mDialog.error(null,listener);
+        mDialog=null;
+    }
+    protected void showSuccDialog(){
+        if (null == mDialog) {
+            mDialog = new MySweetAlertDialog(this);
+        }
+        mDialog.success();
         mDialog=null;
     }
 

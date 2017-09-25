@@ -49,8 +49,10 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
+import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.constant.Constant.FOLLOW_USER_ID;
 import static com.mage.magemata.constant.Constant.ROOT_URL;
+import static com.mage.magemata.constant.Constant.USER;
 import static com.mage.magemata.constant.Constant.USER_FOLLOW;
 import static com.mage.magemata.constant.Constant.USER_ID;
 import static com.mage.magemata.util.PublicMethod.LOG;
@@ -83,15 +85,15 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
     CircleImageView mProfileImage;
     private int type;  //type为0则是用户本信息
     public String[] Title={"关注","粉丝","足迹"};
-    public  static int user_id;
-    public int origin_user_id=MyPrefence.getInstance(UserInfoActivity.this).getUserId();
+    //跳转变化的userid
+    public  static String flash_user_id;
 
     @Override
     public void initData() {
         if(type==0){
             follow_btn.setVisibility(View.GONE);
             btn_chat.setVisibility(View.GONE);
-            user_id= origin_user_id;
+            flash_user_id= getUserId();
         }
         else{
             mProfileImage.setClickable(false);
@@ -102,8 +104,8 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
             @Override
             public void onCheckedChanged(View view, final boolean checked) {
                 Map<String,String> map=getMap();
-                map.put(USER_ID,origin_user_id+"");
-                map.put(FOLLOW_USER_ID,user_id+"");
+                map.put(USER_ID,getUserId()+"");
+                map.put(FOLLOW_USER_ID,flash_user_id+"");
                 httpPost(user_follow_url, map, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
@@ -146,7 +148,7 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
 
     @Override
     public void loadData() {
-        httpGet(get_user_url+user_id, new Callback.CommonCallback<JSONObject>() {
+        httpGet(get_user_url+flash_user_id, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 User user=new Gson().fromJson(result.toString(),User.class);
@@ -186,8 +188,9 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt("type");//读出数据
         //跳转回到自己的主页
-        user_id=bundle.getInt("user_id");
-        if(user_id==MyPrefence.getInstance(UserInfoActivity.this).getUser().getId()){
+        flash_user_id=bundle.getString(FLASH_USER_ID);
+        LOG(flash_user_id);
+        if(Objects.equals(flash_user_id, getUserId())){
             type=0;
         }
     }

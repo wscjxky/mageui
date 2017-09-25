@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import com.afollestad.materialdialogs.color.CircleView;
 import com.jaeger.library.StatusBarUtil;
 import com.mage.magemata.R;
+import com.mage.magemata.chat.ChatFragment;
 import com.mage.magemata.circle.CircleFragment;
 import com.mage.magemata.publish.PublishFragment;
 import com.mage.magemata.user.MoreFragment;
@@ -69,6 +70,7 @@ public class MainActivity extends BaseActivity {
                 .build();
         adapter=new MyViewPagerAdapter(getSupportFragmentManager(),navigationController.getItemCount());
         pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(3);
         navigationController.setupWithViewPager(pager);
 
     }
@@ -104,9 +106,9 @@ public class MainActivity extends BaseActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 1:
-
                     return new PublishFragment();
-
+                case 2:
+                    return new ChatFragment();
                 case 3:
                     return new MoreFragment();
 

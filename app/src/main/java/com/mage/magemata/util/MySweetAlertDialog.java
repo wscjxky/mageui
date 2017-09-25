@@ -49,6 +49,13 @@ public class MySweetAlertDialog {
             mSweetAlertDialog.setConfirmText("确定了!");
             mSweetAlertDialog.showCancelButton(true);
             mSweetAlertDialog.setCancelable(false);
+            mSweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    mSweetAlertDialog.dismiss();
+                }
+            });
+
             return mSweetAlertDialog;
         }
         return null;

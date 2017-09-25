@@ -26,6 +26,8 @@ import com.vondear.rxtools.RxDataUtils;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -35,9 +37,10 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.constant.Constant.ROOT_URL;
 import static com.mage.magemata.constant.Constant.USER_ID;
-import static com.mage.magemata.user.UserInfoActivity.user_id;
+import static com.mage.magemata.user.UserInfoActivity.flash_user_id;
 import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.httpGet;
 
@@ -51,18 +54,20 @@ public class UserPageFragment extends BaseFragment {
     private FollowercyAdapter mFollowerAdapter;
     private static boolean FOLLOERED=false;
     private  ArrayList<User> followlist = new ArrayList<>();
+
     private String get_follow_url = ROOT_URL+"userfollow/create";
     private String get_fans_url = ROOT_URL+"userfollow/";
-
+    private String get_history_url = ROOT_URL+"userhistory/";
 
 
     @Override
     protected void initData() {
+        initAdapter();
         Bundle bundle=getArguments();
         int index=bundle.getInt("index");
         switch (index){
             case 0:
-                httpGet(get_follow_url + "?user_id=" + user_id, new Callback.CommonCallback<JSONArray>() {
+                httpGet(get_follow_url + "?user_id=" + flash_user_id, new Callback.CommonCallback<JSONArray>() {
                     @Override
                     public void onSuccess(JSONArray result) {
                         followlist.clear();
@@ -72,17 +77,13 @@ public class UserPageFragment extends BaseFragment {
                         mFollowerAdapter.setNewData(followlist);
                         mFollowerAdapter.notifyDataSetChanged();
                     }
-
                     @Override
                     public void onError(Throwable ex, boolean isOnCallback) {
                         LOG(ex.toString());
                     }
-
                     @Override
                     public void onCancelled(CancelledException cex) {
-
                     }
-
                     @Override
                     public void onFinished() {
 
@@ -90,7 +91,7 @@ public class UserPageFragment extends BaseFragment {
                 });
                 break;
             case 1:
-                httpGet(get_fans_url  + user_id, new Callback.CommonCallback<JSONArray>() {
+                httpGet(get_fans_url  + flash_user_id, new Callback.CommonCallback<JSONArray>() {
                     @Override
                     public void onSuccess(JSONArray result) {
                         followlist.clear();
@@ -116,29 +117,41 @@ public class UserPageFragment extends BaseFragment {
 
                     }
                 });
-
                 break;
             case 2:
+                httpGet(get_history_url  + flash_user_id, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        followlist.clear();
+                        try {
+                            followlist = new Gson().fromJson(result.getString("data"), new TypeToken<ArrayList<User>>() {}.getType());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        mFollowerAdapter.setNewData(followlist);
+                        mFollowerAdapter.notifyDataSetChanged();
+                        mRecyclerView.setClickable(false);
+                    }
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        LOG(ex.toString());
+                    }
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+                    }
+                    @Override
+                    public void onFinished() {
 
+                    }
+                });
                 break;
         }
-
-
     }
 
     @Override
     protected void setData() {
 
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initAdapter();
-    }
-
-
-
 
     private void initAdapter() {
         mRecyclerView.setHasFixedSize(true);
@@ -150,9 +163,8 @@ public class UserPageFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle=new Bundle();
                 bundle.putInt("type",1);
-                bundle.putInt(USER_ID,mFollowerAdapter.getItem(position).getId());
+                bundle.putString(FLASH_USER_ID,mFollowerAdapter.getItem(position).getId());
                 readyGo(UserInfoActivity.class,bundle);
-
             }
         });
         mRecyclerView.setAdapter(mFollowerAdapter);
@@ -174,9 +186,17 @@ public class UserPageFragment extends BaseFragment {
         public FollowercyAdapter() {
             super(R.layout.follow_rv_item);
         }
-
         @Override
         protected void convert(BaseViewHolder helper, User item) {
+            //足迹板块
+            if(item.getContent()!=null)
+            {
+                helper.getView(R.id.follow_item_portrait).setVisibility(View.GONE);
+                helper.setText(R.id.follow_item_name, item.getContent());
+                helper.setText(R.id.follow_item_time, item.getTime());
+                helper.getView(R.id.follow_item_moreimage).setVisibility(View.GONE);
+                return;
+            }
             helper.addOnClickListener(R.id.follow_item_moreimage);
             if(!RxDataUtils.isNullString(item.getProfile())) {
                 Picasso.with(mAppCompatActivity)
@@ -187,7 +207,6 @@ public class UserPageFragment extends BaseFragment {
             }
             helper.setText(R.id.follow_item_name, item.getuserName());
         }
-
     }
 
 

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        style="@style/mytoolbar"
+        android:id="@+id/toolbar"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="25dp"
+        android:orientation="vertical">
+        <LinearLayout
+
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:text="物品名"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <EditText
+                android:id="@+id/addgood_good_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:width="200dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系方式" />
+
+            <EditText
+                android:id="@+id/addgood_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:width="200dp" />
+
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="简介" />
+
+            <EditText
+                android:id="@+id/addgood_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="20dp"
+                android:width="200dp" />
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="价格" />
+
+            <EditText
+                android:id="@+id/addgood_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="20dp"
+                android:width="200dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="是否支持议价" />
+
+
+            <RadioButton
+                android:id="@+id/addgood_rb_bargin"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:id="@+id/addcard_ll_inputcoin"
+            android:visibility="gone">
+            <TextView
+                android:text="悬赏金币:"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <EditText
+                android:id="@+id/addcard_et_coin"
+                android:inputType="number"
+                android:layout_marginLeft="20dp"
+                android:hint="0-9"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <Button
+                android:id="@+id/addcard_check1"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/addcard_ll_addlayout"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:text="商品图片"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@android:drawable/ic_menu_add"
+                android:id="@+id/upload_iv_addimg"
+                android:layout_marginLeft="40dp"
+                android:contentDescription="@null"
+                android:clickable="true"
+                />
+
+            <VideoView
+                android:layout_width="216dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/addcard_vv_videoView"
+                android:clickable="true"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addgood_btn_submit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30.0dip"
+            android:layout_marginRight="30.0dip"
+            android:layout_marginTop="20.0dip"
+            android:background="@color/pink"
+            android:text="发      布" />
+    </LinearLayout>
+
+
+</LinearLayout>

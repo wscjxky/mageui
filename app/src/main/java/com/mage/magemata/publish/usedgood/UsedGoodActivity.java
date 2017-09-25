@@ -3,24 +3,52 @@ package com.mage.magemata.publish.usedgood;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.lcodecore.tkrefreshlayout.header.GoogleDotView;
 import com.mage.magemata.R;
 import com.mage.magemata.circle.Circle;
+import com.mage.magemata.circle.CircleFragment;
+import com.mage.magemata.circle.card.Circle_Item_Activity;
 import com.mage.magemata.main.BaseActivity;
+import com.mage.magemata.user.UserInfoActivity;
+import com.mage.magemata.util.MyPrefence;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
+import static com.mage.magemata.constant.Constant.CIRCLE_ID;
+import static com.mage.magemata.constant.Constant.GET_CIRCLE;
+import static com.mage.magemata.constant.Constant.GOOD_ID;
+import static com.mage.magemata.constant.Constant.ROOT_URL;
+import static com.mage.magemata.util.PublicMethod.LOG;
+import static com.mage.magemata.util.PublicMethod.httpGet;
 
 /**
  * Created by Administrator on 2017/9/10.
@@ -33,8 +61,11 @@ public class UsedGoodActivity extends BaseActivity {
     private Toolbar toolbar;
     @ViewInject(R.id.used_rv)
     private RecyclerView recyclerView;
-    private CircleFragAdapter circleFragAdapter;
-
+    @ViewInject(R.id.refreshLayout)
+    private TwinklingRefreshLayout mRefreshLayout;
+    private UsedGoodAdapter usedGoodAdapter;
+    private  String GET_URL=ROOT_URL+"good/";
+    private  ArrayList<Good> goodlist = new ArrayList<>();
     @Override
     public void initData() {
         toolbar.setTitleTextColor(Color.WHITE);
@@ -43,48 +74,132 @@ public class UsedGoodActivity extends BaseActivity {
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        circleFragAdapter = new CircleFragAdapter();
-        circleFragAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        usedGoodAdapter = new UsedGoodAdapter();
+        usedGoodAdapter.openLoadAnimation(SCALEIN);
+        usedGoodAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GoodInfoActivity.actionstart(UsedGoodActivity.this);
+                CURRENT_GOOD_ID=usedGoodAdapter.getItem(position)
+                        .getGood_id();
+                readyGo(GoodInfoActivity.class);
             }
         });
-        recyclerView.setAdapter(circleFragAdapter);
+        recyclerView.setAdapter(usedGoodAdapter);
         searchView.setEllipsize(true);
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Do some magic
-                return false;
+                searchData(query);
+                    return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Do some magic
+                LOG(newText);
                 return false;
             }
         });
 
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+    }
+    @Event(R.id.usedgood_btn_addgood)
+    private void addGood(View view){
+        readyGo(AddGoodActivity.class);
+    }
+    @Override
+    public void loadData() {
+        mRefreshLayout.setHeaderView(new GoogleDotView(UsedGoodActivity.this));
+        mRefreshLayout.setEnableLoadmore(false);
+        mRefreshLayout.setEnableOverScroll(true);
+        mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter(){
             @Override
-            public void onSearchViewShown() {
-                //Do some magic
-            }
+            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
+                httpGet(GET_URL, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        try {
+                            String state=result.getString("state");
+                            switch (state){
+                                case "ok":
+                                    goodlist.clear();
+                                    goodlist = new Gson().fromJson(result.getString("data"), new TypeToken<ArrayList<Good>>() {}.getType());
+                                    break;
+                                default:
+                                    LOG("error");
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                    }
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        Log.e("sdf",ex.toString());
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+                        refreshLayout.finishRefreshing();
+                    }
+                });
+            }
             @Override
-            public void onSearchViewClosed() {
-                //Do some magic
+            public void onFinishRefresh() {
+                usedGoodAdapter.setNewData(goodlist);
+                usedGoodAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    @Override
-    public void loadData() {
+    public void searchData(String text){
+        httpGet(GET_URL+"create?good_name="+text, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                try {
+                    String state=result.getString("state");
+                    switch (state){
+                        case "ok":
+                            goodlist.clear();
+                            goodlist = new Gson().fromJson(result.getString("data"), new TypeToken<ArrayList<Good>>() {}.getType());
+                            break;
+                        case "empty":
+                            goodlist.clear();
+                            showSuccToast(R.string.emptysearch);
+                            break;
+                        default:
+                            LOG("error");
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("sdf",ex.toString());
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                mRefreshLayout.finishRefreshing();
+            }
+        });
 
     }
-
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_used);
@@ -97,44 +212,25 @@ public class UsedGoodActivity extends BaseActivity {
         searchView.setMenuItem(item);
         return true;
     }
-    public static void actionStart(Context context){
-        Intent intent=new Intent(context,UsedGoodActivity.class);
-        context.startActivity(intent);
-    }
 
-    private   List<Circle> getSampleData() {
-        List<Circle> list = new ArrayList<>();
 
-        for(int i=0 ;i<10;i++){
-            Circle status = new Circle();
-            status.setTitle("物品"+i);
-            status.setIntroduction("物品的描述");
-
-            list.add(status);
-
+    public class UsedGoodAdapter extends BaseQuickAdapter<Good, BaseViewHolder> {
+        public UsedGoodAdapter() {
+            super(R.layout.used_good_item);
         }
-
-        return list;
-    }
-    public class CircleFragAdapter extends BaseQuickAdapter<Circle, BaseViewHolder> {
-        private  boolean stage=true;
-        public CircleFragAdapter() {
-            super(R.layout.used_good_item, getSampleData());
-        }
-
         @Override
-        protected void convert(BaseViewHolder helper, Circle item) {
-//        helper.addOnClickListener(R.id.follow_item_moreimage);
-            if(stage){
-                helper.setImageResource(R.id.good_item_logo,R.drawable.photo5);
-                stage=false;
-            }
-            else {
-                stage=true;
-                helper.setImageResource(R.id.good_item_logo, R.drawable.food4);
-            }
+        protected void convert(BaseViewHolder helper, Good i) {
 
-            helper.setText(R.id.good_name, item.getTitle());
+            helper.setText(R.id.good_name, i.getGood_name());
+
+            Picasso.with(UsedGoodActivity.this)
+                    .load(i.getImage())
+                    .resize(120, new Random().nextInt(20)+110)
+                    .centerCrop()
+                    .into( (ImageView)helper.getView(R.id.good_item_logo));
+            helper.setText(R.id.good_user, i.getUser_name());
+            helper.setText(R.id.good_time, i.getCreatetime());
+
         }
 
     }

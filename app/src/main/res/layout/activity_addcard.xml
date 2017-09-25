@@ -94,11 +94,11 @@
             />
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@android:drawable/ic_menu_add"
-            android:id="@+id/addcard_iv_addimg"
+            android:id="@+id/upload_iv_addimg"
             android:layout_marginLeft="40dp"
             android:contentDescription="@null"
             android:clickable="true"

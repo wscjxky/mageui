@@ -75,10 +75,10 @@ public class MyPrefence {
             return new Gson().fromJson(s, User.class);
         }
     }
-    public int getUserId(){
+    public String getUserId(){
         String s=getString(KEY_USER_INFO);
         if (s == null) {
-            return 0;
+            return "";
         }else {
             return new Gson().fromJson(s, User.class).getId();
         }

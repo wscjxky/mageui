@@ -152,7 +152,6 @@ public class CircleFragment extends BaseFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, Circle item) {
-
             helper.setText(R.id.circlef_tv_content, item.getContent());
             Picasso.with(activity)
                     .load(item.getImage())

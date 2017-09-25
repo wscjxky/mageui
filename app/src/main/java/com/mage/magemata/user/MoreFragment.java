@@ -1,20 +1,15 @@
 package com.mage.magemata.user;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,30 +18,21 @@ import android.widget.TextView;
 
 import com.mage.magemata.R;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.mage.magemata.login.LoginActivity;
 import com.mage.magemata.main.BaseFragment;
-import com.mage.magemata.main.MainActivity;
-import com.mage.magemata.publish.PublishFragment;
 import com.mage.magemata.util.CheckVersionActivity;
 import com.mage.magemata.util.MyPrefence;
-import  com.vondear.rxtools.RxCameraUtils;
 import  com.vondear.rxtools.RxImageUtils;
 import com.vondear.rxtools.RxPhotoUtils;
 import com.vondear.rxtools.view.dialog.RxDialog;
-
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
-import static com.mage.magemata.R.id.activty_navbar;
-import static com.mage.magemata.R.id.container;
+import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.util.PublicMethod.LOG;
 
 /**
@@ -77,6 +63,8 @@ public class MoreFragment extends BaseFragment {
     private void userinfo(View view){
         Bundle bundle=new Bundle();
         bundle.putInt("type",0);
+        bundle.putString(FLASH_USER_ID,getUserId());
+
         readyGo(UserInfoActivity.class,bundle);
     }
     @Event(R.id.more_linel_otherinfo)
@@ -117,9 +105,7 @@ public class MoreFragment extends BaseFragment {
             @Override
             public void onClick(View arg0) {
                 MyPrefence.getInstance(mAppCompatActivity).logOut();
-                LOG(                MyPrefence.getInstance(mAppCompatActivity).isLogined()+""
-);
-                LoginActivity.actionstart(mAppCompatActivity);
+                readyGoThenKill(LoginActivity.class);
             }
         });
         settingDialog.setContentView(dialogView1);

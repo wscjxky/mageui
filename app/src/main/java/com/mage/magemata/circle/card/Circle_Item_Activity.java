@@ -129,6 +129,8 @@ public class Circle_Item_Activity extends SlidingUpBaseActivity<ObservableRecycl
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle=new Bundle();
                 bundle.putInt("type",1);
+                bundle.putInt("user_id", madapter.getItem(position).getUserid());
+
                 UserInfoActivity.actionstart(Circle_Item_Activity.this,bundle);
             }
         });

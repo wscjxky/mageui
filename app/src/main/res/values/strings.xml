@@ -23,6 +23,8 @@
 
     <string name="uploading" >上传中</string>
     <string name="uploadfinish" >上传成功</string>
-    <string name="uploaderror" >上传失败</string>
+    <string name="uploaderror" >上传失败,请重试</string>
+    <string name="emptysearch">没有查到相关信息</string>
+    <string name="addaddress" >添加地址</string>
 
 </resources>

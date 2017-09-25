@@ -27,17 +27,20 @@ public class Constant {
     public  static  String POST_CIRCLE_ITEM=GET_CIRCLE+"item";
     public  static  String POST_CIRCLE=ROOT_URL+"circle";
 
-
+    public static final String T_USER_ID = "USER_ID";
     public static final String CIRCLE_ID = "CIRCLE_ID";
     public static final String CIRCLE_ITEM_ID = "CIRCLE_ITEM_ID";
+    public static final String GOOD_ID = "good_id";
+
     public static String VALUE_CIRCLE_ID;
-    public static String VALUE_USER_ID;
 
     //数据库字段
+    public static final String FLASH_USER_ID="flash_user_id";
 
     /**
      * user表
      */
+    //变换的观察userid
     public static final String USER_ID="user_id";
 
     /**
