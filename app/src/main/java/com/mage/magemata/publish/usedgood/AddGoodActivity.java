@@ -3,6 +3,7 @@ package com.mage.magemata.publish.usedgood;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -30,15 +31,15 @@ import static com.mage.magemata.util.PublicMethod.httpPost;
 
 public class AddGoodActivity  extends BaseActivity {
     @ViewInject(R.id.addgood_content)
-    private TextView content;
+    private EditText content;
     @ViewInject(R.id.addgood_good_name)
-    private TextView name;
+    private EditText name;
     @ViewInject(R.id.addgood_rb_bargin)
     private RadioButton bargin;
     @ViewInject(R.id.addgood_price)
-    private TextView price;
+    private EditText price;
     @ViewInject(R.id.addgood_phone)
-    private TextView phone;
+    private EditText phone;
     private String POST_URL = ROOT_URL + "good";
 
     @Override

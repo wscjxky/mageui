@@ -15,14 +15,19 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:layout_height="70dp"
-        android:layout_width="70dp"
-        android:layout_gravity="bottom|right|end"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:id="@+id/userinfo_btn_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="35dp"
+        android:layout_marginRight="20dp"
+
         app:fab_colorNormal="@color/pink"
         app:fab_icon="@drawable/icn_1"
-        android:id="@+id/userinfo_btn_chat"
-        />
+        app:fab_labelStyle="@style/menu_labels_style">
+
+    </com.getbase.floatingactionbutton.FloatingActionButton>
+
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_cv_userimage"
@@ -44,16 +49,15 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/userinfo_ct_colltoolbar"
+            android:clickable="true"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/hua"
+            android:layout_height="260dp"
+            android:background="@drawable/bg_wood"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|snap">
 
         </android.support.design.widget.CollapsingToolbarLayout>
-        ​​
-
         <LinearLayout
             android:id="@+id/userinfo_ll_toolbar"
             android:layout_width="match_parent"

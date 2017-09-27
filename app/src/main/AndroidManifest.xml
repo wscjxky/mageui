@@ -55,7 +55,14 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".publish.usedgood.AddGoodActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".util.CheckVersionActivity"
+        <activity android:name=".more.CheckVersionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".more.GpaActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".more.OtherActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".more.WalletActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".publish.delivery.DeliveryActivity"
             android:screenOrientation="portrait"/>
@@ -64,6 +71,20 @@
         <activity android:name=".publish.delivery.rice.RiceActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".publish.delivery.RiceConfirmActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.joingood.JoinGoodActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.joingood.JoinGoodInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.joingood.JoinGoodCustomerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.joingood.AddJoinGoodActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.lostfound.LostFoundActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.lostfound.AddLostFoundActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".publish.print.PrintActivity"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -51,12 +51,17 @@
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
         <View style="@style/bg_line"/>
-        <!-- 下圆角-->
 
-        <!-- 下圆角-->
         <LinearLayout style="@style/bottom_layout">
             <TextView style="@style/usertext" android:text="常用信息"
                 android:id="@+id/more_linel_otherinfo" />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <LinearLayout style="@style/bottom_layout">
+            <TextView style="@style/usertext" android:text="绩点计算器"
+                android:id="@+id/more_linel_gpa" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
         <View style="@style/bg_line"/>

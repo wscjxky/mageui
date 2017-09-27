@@ -58,4 +58,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
     compile 'com.github.stfalcon:chatkit:0.2.2'
+    compile 'com.github.chrisbanes:PhotoView:2.0.0'
+
 }

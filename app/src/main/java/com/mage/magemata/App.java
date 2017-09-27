@@ -3,9 +3,6 @@ package com.mage.magemata;
 import android.app.Application;
 
 import com.lzy.okgo.OkGo;
-import com.mage.magemata.util.CheckVersionActivity;
-import com.mage.magemata.util.MyPrefence;
-import com.mage.magemata.util.PublicMethod;
 import com.vondear.rxtools.RxUtils;
 
 import org.xutils.x;

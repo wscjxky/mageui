@@ -109,6 +109,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         bundle.putInt(key,value);
         return bundle;
     }
+
     protected int getBundleid(String key){
         Bundle bundle=new Bundle();
         return bundle.getInt(key);
@@ -126,8 +127,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void openImageIntent(){
         Intent intent;
-        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, GET_IMAGE_FROM_PHONE);
+        intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent,GET_IMAGE_FROM_PHONE);
     }
 
     //打开上传图片
@@ -223,6 +224,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         return mDialog.getConfirmDialog();
     }
+    protected void showConfirmDialog(String content,SweetAlertDialog.OnSweetClickListener listener) {
+        if (null == mDialog) {
+            mDialog = new MySweetAlertDialog(this);
+        }
+        mDialog.showConfirmDialog(content,listener);
+        mDialog=null;
+    }
+
     protected void showLoadingDialog() {
         if (null == mDialog) {
             mDialog = new MySweetAlertDialog(this);
@@ -278,11 +287,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         mDialog.error(null,listener);
         mDialog=null;
     }
-    protected void showSuccDialog(){
+    protected void showSuccDialog(String content){
         if (null == mDialog) {
             mDialog = new MySweetAlertDialog(this);
         }
-        mDialog.success();
+        mDialog.showSuccessDialog(content);
         mDialog=null;
     }
 

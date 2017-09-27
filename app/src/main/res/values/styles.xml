@@ -26,8 +26,9 @@
 
     <style name="mytoolbar" >
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">49dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:titleTextColor" tools:targetApi="m">@color/white</item>
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/white</item>
         <item name="android:background">@color/colorPrimary</item>
 
     </style>
@@ -141,6 +142,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowActionModeOverlay">true</item>
     </style>
+
 
 
 </resources>

@@ -21,6 +21,9 @@
 
     <string name="checkInternet" >失败了,请检查网络</string>
 
+    <string name="confirm_submit" >确认提交吗</string>
+    <string name="success_submit" >提交成功</string>
+
     <string name="uploading" >上传中</string>
     <string name="uploadfinish" >上传成功</string>
     <string name="uploaderror" >上传失败,请重试</string>

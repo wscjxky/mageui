@@ -34,6 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
 import static com.mage.magemata.constant.Constant.CIRCLE_ITEM_ID;
+import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.constant.Constant.GET_CIRCLE_ITEM;
 import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM_COMMENT;
 import static com.mage.magemata.constant.Constant.USER_ID;
@@ -66,11 +67,6 @@ public class CardActivity  extends BaseActivity {
 
     private Circle_item_commentAdapter madapter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
 
     @Override
@@ -81,10 +77,9 @@ public class CardActivity  extends BaseActivity {
         madapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
                 Bundle bundle=new Bundle();
                 bundle.putInt("type",1);
-                bundle.putInt("user_id", madapter.getItem(position).getId());
+                bundle.putString(FLASH_USER_ID, madapter.getItem(position).getUserId());
 
                 UserInfoActivity.actionstart(CardActivity.this,bundle);
             }

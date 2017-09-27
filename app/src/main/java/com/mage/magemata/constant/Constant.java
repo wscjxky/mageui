@@ -7,6 +7,8 @@ import com.mage.magemata.util.MyPrefence;
  */
 
 public class Constant {
+    public static final int SET_BACK_GROUND = 2000 ;
+
     public  static  String UPLOAD="http://47.94.251.202/mage/public/index.php/upload";
     public  static  String SHOWIMAGE="http://47.94.251.202/mage/public/";
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    style="@style/mytoolbar">
+
+</android.support.v7.widget.Toolbar>
+    <LinearLayout style="@style/top_layout"
+        android:id="@+id/other_linel_submway">
+        <TextView style="@style/usertext"
+            android:text="北京地铁图" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_subway"/>
+    </LinearLayout>
+    <!-- 无圆角-->
+    <LinearLayout style="@style/mid_layout">
+        <TextView style="@style/usertext"
+            android:text="高校各办公室" />
+    </LinearLayout>
+    <LinearLayout style="@style/bottom_layout">
+        <TextView style="@style/usertext"
+            android:text="校历" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_calendar"/>
+    </LinearLayout>
+</LinearLayout>

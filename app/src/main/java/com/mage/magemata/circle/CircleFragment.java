@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -49,21 +50,15 @@ public class CircleFragment extends BaseFragment {
     private RecyclerView recyclerView;
     @ViewInject(R.id.refreshLayout)
     private TwinklingRefreshLayout mRefreshLayout;
+    @ViewInject(R.id.fgcircle_menu)
+    FloatingActionsMenu fb_menu;
 
-    private Activity activity;
     private  ArrayList<Circle> circlelist = new ArrayList<>();
     private CircleFragAdapter circleFragAdapter;
 
 
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
-        this.activity = getActivity();
-        super.onActivityCreated(savedInstanceState);
-
-    }
 
     @Override
     protected void initData() {
@@ -72,17 +67,17 @@ public class CircleFragment extends BaseFragment {
 
     @Override
     protected void setData() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mAppCompatActivity));
         circleFragAdapter  = new CircleFragAdapter();
         circleFragAdapter.openLoadAnimation(SCALEIN);
         circleFragAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MyPrefence.getInstance(activity).saveInt(CIRCLE_ID,circleFragAdapter.getItem(position).getCircle_id());
-                Circle_Item_Activity.actionstart(activity);
+                MyPrefence.getInstance(mAppCompatActivity).saveInt(CIRCLE_ID,circleFragAdapter.getItem(position).getCircle_id());
+                Circle_Item_Activity.actionstart(mAppCompatActivity);
             }
         });
-        mRefreshLayout.setHeaderView(new GoogleDotView(activity));
+        mRefreshLayout.setHeaderView(new GoogleDotView(mAppCompatActivity));
         mRefreshLayout.setEnableLoadmore(false);
         mRefreshLayout.setEnableOverScroll(true);
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter(){
@@ -126,14 +121,18 @@ public class CircleFragment extends BaseFragment {
     //
     @Event(R.id.fgcircle_btn_addcircle)
     private void addCircle(View view){
-       AddCircleActivity.actionStart(activity);
+        fb_menu.collapse();
+
+        AddCircleActivity.actionStart(mAppCompatActivity);
 //        mRefreshLayout.startRefresh();
 //        AddCircleActivity.actionStart(activity);
-//        floatingActionsMenu.collapse();
     }
     @Event(R.id.fgcircle_btn_mycircle)
     private void myCircle(View view) {
+        fb_menu.collapse();
+
         readyGo(MyCircleActivity.class);
+
     }
 
 
@@ -153,7 +152,7 @@ public class CircleFragment extends BaseFragment {
         @Override
         protected void convert(BaseViewHolder helper, Circle item) {
             helper.setText(R.id.circlef_tv_content, item.getContent());
-            Picasso.with(activity)
+            Picasso.with(mAppCompatActivity)
                     .load(item.getImage())
                     .resize(90, 90)
                     .centerCrop()

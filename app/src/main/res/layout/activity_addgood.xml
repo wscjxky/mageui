@@ -158,16 +158,13 @@
                 android:layout_gravity="center"
                 />
 
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@android:drawable/ic_menu_add"
+                android:background="@android:drawable/ic_input_add"
                 android:id="@+id/upload_iv_addimg"
-                android:layout_marginLeft="40dp"
-                android:contentDescription="@null"
-                android:clickable="true"
-                />
+                android:clickable="true"/>
+
 
             <VideoView
                 android:layout_width="216dp"

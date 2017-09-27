@@ -41,6 +41,26 @@ public class MySweetAlertDialog {
             mSweetAlertDialog.dismissWithAnimation();
         }
     }
+    public SweetAlertDialog showSuccessDialog(String content) {
+        if (mSweetAlertDialog != null) {
+            mSweetAlertDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+            mSweetAlertDialog.setConfirmText("确定");
+            mSweetAlertDialog.setTitleText(content==null?"成功":content);
+            mSweetAlertDialog.setCanceledOnTouchOutside(true);
+            mSweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    mSweetAlertDialog.dismiss();
+                }
+            });
+
+            if (!mSweetAlertDialog.isShowing()) {
+                mSweetAlertDialog.show();
+            }
+        }
+        return null;
+    }
+
     public SweetAlertDialog getConfirmDialog() {
         if (mSweetAlertDialog != null) {
             mSweetAlertDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
@@ -60,6 +80,35 @@ public class MySweetAlertDialog {
         }
         return null;
     }
+    public void showConfirmDialog(String content,SweetAlertDialog.OnSweetClickListener listener) {
+        if (mSweetAlertDialog != null) {
+            mSweetAlertDialog
+                    .setTitleText(content)
+                    .setCancelText("我再想想")
+                    .setConfirmText("确定了!")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismissWithAnimation();
+                        }
+                    })
+                    .setConfirmClickListener(listener == null ? new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                        }
+                    } : listener)
+                    .changeAlertType(SweetAlertDialog.WARNING_TYPE);
+            mSweetAlertDialog.setCanceledOnTouchOutside(false);
+
+            if (!mSweetAlertDialog.isShowing()) {
+                mSweetAlertDialog.show();
+            }
+        }
+    }
+
+
     public void error(String content, SweetAlertDialog.OnSweetClickListener listener){
         if (mSweetAlertDialog != null) {
             mSweetAlertDialog.setTitleText(mActivity.getString(R.string.Error))

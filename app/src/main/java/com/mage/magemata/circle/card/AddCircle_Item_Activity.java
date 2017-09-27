@@ -2,46 +2,26 @@ package com.mage.magemata.circle.card;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.mage.magemata.R;
-import com.mage.magemata.circle.AddCircleActivity;
 import com.mage.magemata.main.BaseActivity;
-import com.mage.magemata.user.MoreFragment;
 import com.mage.magemata.util.MyPrefence;
-import com.vondear.rxtools.RxImageUtils;
-import com.vondear.rxtools.RxPhotoUtils;
 
 import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.http.body.FileBody;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import es.dmoral.toasty.Toasty;
 
-import static com.mage.magemata.constant.Constant.GET_CIRCLE_ITEM;
 import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM;
-import static com.mage.magemata.constant.Constant.ROOT_URL;
-import static com.mage.magemata.constant.Constant.UPLOAD;
 import static com.mage.magemata.constant.Constant.VALUE_CIRCLE_ID;
 import static com.mage.magemata.util.PublicMethod.httpPost;
-import static com.vondear.rxtools.RxFileUtils.getFileAllSize;
 
 /**
  * Created by Administrator on 2017/9/12.

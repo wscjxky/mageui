@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.vondear.rxtools.RxNetUtils;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
@@ -56,10 +59,10 @@ public abstract class BaseFragment extends Fragment {
 
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -73,8 +76,10 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return x.view().inject(this,inflater,container);
+        view =x.view().inject(this,inflater,container);
+        return  view;
     }
+
 
     // 数据
     protected abstract void initData();
@@ -89,10 +94,11 @@ public abstract class BaseFragment extends Fragment {
     protected User getUserInfo(){
         return MyPrefence.getInstance(mAppCompatActivity).getUser();
     }
+
+
+
     //初始化toolbar
     public void initToolbar(String title, boolean isDisplayHomeAsUp) {
-        Toolbar toolbar= (Toolbar) view.findViewById(R.id.toolbar);
-        mAppCompatActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = mAppCompatActivity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);

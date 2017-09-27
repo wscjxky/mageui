@@ -3,46 +3,31 @@ package com.mage.magemata.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.afollestad.materialdialogs.color.CircleView;
-import com.jaeger.library.StatusBarUtil;
 import com.mage.magemata.R;
 import com.mage.magemata.chat.ChatFragment;
 import com.mage.magemata.circle.CircleFragment;
 import com.mage.magemata.publish.PublishFragment;
-import com.mage.magemata.user.MoreFragment;
-import com.mage.magemata.util.MyPrefence;
+import com.mage.magemata.more.MoreFragment;
 import com.mage.magemata.util.PublicMethod;
 import com.vondear.rxtools.RxImageUtils;
-import com.vondear.rxtools.RxPhotoUtils;
 
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.Objects;
 
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
-
-import static com.mage.magemata.util.PublicMethod.requestPermission;
 
 public class MainActivity extends BaseActivity {
     @ViewInject(R.id.activty_navbar)
@@ -98,7 +83,7 @@ public class MainActivity extends BaseActivity {
     private class MyViewPagerAdapter extends FragmentPagerAdapter {
         private int size;
 
-        public MyViewPagerAdapter(FragmentManager fm,int size) {
+        private MyViewPagerAdapter(FragmentManager fm,int size) {
             super(fm);
             this.size = size;
         }

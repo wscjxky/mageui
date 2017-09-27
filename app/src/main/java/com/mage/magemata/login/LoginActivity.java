@@ -45,7 +45,9 @@ import shem.com.materiallogin.MaterialLoginView;
 
 import static com.mage.magemata.constant.Constant.GET_USERLOGIN;
 import static com.mage.magemata.constant.Constant.POST_USERREGISET;
+import static com.mage.magemata.constant.Constant.ROOT_URL;
 import static com.mage.magemata.util.PublicMethod.LOG;
+import static com.mage.magemata.util.PublicMethod.httpGet;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 import static com.mage.magemata.util.PublicMethod.isJsonarray0;
 
@@ -60,7 +62,7 @@ public class LoginActivity extends BaseActivity {
     private View mViewNeedOffset;
     private MyPrefence myPrefence;
 
-
+    private String video_url=ROOT_URL+"config/video";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -186,27 +188,61 @@ public class LoginActivity extends BaseActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initEvent() {
-        String path= Environment.getExternalStorageDirectory().getPath() + "/test.mp4";
-        String url="http://gslb.miaopai.com/stream/AUxY6qmkBRu-4GxzO8uKpF6gd770Stjb.mp4";
-        File file=new File(path);
-        final Uri uri = Uri.parse(url);
-        if (!file.exists()) {
-            Toast.makeText(this, "视频文件路径错误", Toast.LENGTH_SHORT).show();
-        }else {
-            final android.widget.MediaController mp=new android.widget.MediaController(this);
-            mp.setVisibility(View.INVISIBLE);
-            videoView.setMediaController(mp);
-            videoView.setClickable(false);
-            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    videoView.setVideoURI(uri);
-                    videoView.start();
+        httpGet(video_url, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                final Uri uri = Uri.parse(result);
+                final android.widget.MediaController mp=new android.widget.MediaController(LoginActivity.this);
+                mp.setVisibility(View.INVISIBLE);
+                videoView.setMediaController(mp);
+                videoView.setClickable(false);
+                videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        videoView.setVideoURI(uri);
+                        videoView.start();
+                    }
+                });
+                videoView.setVideoURI(uri);
+                videoView.start();
                 }
-            });
-            videoView.setVideoURI(uri);
-            videoView.start();
-        }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+//        String path= Environment.getExternalStorageDirectory().getPath() + "/test.mp4";
+//        String url="http://gslb.miaopai.com/stream/3rTNqo1qu~QGDMdYPVhql7N3zGiANkAmhYrWjg__.mp4";
+//        File file=new File(path);
+//        final Uri uri = Uri.parse(url);
+//        if (!file.exists()) {
+//            Toast.makeText(this, "视频文件路径错误", Toast.LENGTH_SHORT).show();
+//        }else {
+//            final android.widget.MediaController mp=new android.widget.MediaController(this);
+//            mp.setVisibility(View.INVISIBLE);
+//            videoView.setMediaController(mp);
+//            videoView.setClickable(false);
+//            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                @Override
+//                public void onCompletion(MediaPlayer mediaPlayer) {
+//                    videoView.setVideoURI(uri);
+//                    videoView.start();
+//                }
+//            });
+//            videoView.setVideoURI(uri);
+//            videoView.start();
+//        }
     }
 
 

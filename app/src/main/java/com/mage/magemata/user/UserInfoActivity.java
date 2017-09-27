@@ -2,8 +2,12 @@ package com.mage.magemata.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,11 +15,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -29,10 +35,13 @@ import com.mage.magemata.circle.SlidingUpBaseActivity;
 import com.mage.magemata.circle.card.Circle_Item_Activity;
 import com.mage.magemata.main.BaseActivity;
 import com.mage.magemata.main.MainActivity;
+import com.mage.magemata.more.MoreFragment;
 import com.mage.magemata.util.MyPrefence;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
 import com.vondear.rxtools.RxDataUtils;
+import com.vondear.rxtools.RxImageUtils;
+import com.vondear.rxtools.RxPhotoUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +61,7 @@ import es.dmoral.toasty.Toasty;
 import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.constant.Constant.FOLLOW_USER_ID;
 import static com.mage.magemata.constant.Constant.ROOT_URL;
+import static com.mage.magemata.constant.Constant.SET_BACK_GROUND;
 import static com.mage.magemata.constant.Constant.USER;
 import static com.mage.magemata.constant.Constant.USER_FOLLOW;
 import static com.mage.magemata.constant.Constant.USER_ID;
@@ -59,6 +69,7 @@ import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.getMap;
 import static com.mage.magemata.util.PublicMethod.httpGet;
 import static com.mage.magemata.util.PublicMethod.httpPost;
+import static com.vondear.rxtools.RxPhotoUtils.GET_IMAGE_FROM_PHONE;
 
 /**
  * Created by Administrator on 2017/9/8.
@@ -83,13 +94,18 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
     AppBarLayout appbarLayout;
     @ViewInject(R.id.user_cv_userimage)
     CircleImageView mProfileImage;
+    @ViewInject(R.id.userinfo_ct_colltoolbar)
+    CollapsingToolbarLayout userbackground;
     private int type;  //type为0则是用户本信息
     public String[] Title={"关注","粉丝","足迹"};
     //跳转变化的userid
     public  static String flash_user_id;
-
+    private String USER_BACKGROUND = "user_background";
     @Override
     public void initData() {
+        getBack();
+
+
         if(type==0){
             follow_btn.setVisibility(View.GONE);
             btn_chat.setVisibility(View.GONE);
@@ -189,7 +205,6 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
         type = bundle.getInt("type");//读出数据
         //跳转回到自己的主页
         flash_user_id=bundle.getString(FLASH_USER_ID);
-        LOG(flash_user_id);
         if(Objects.equals(flash_user_id, getUserId())){
             type=0;
         }
@@ -253,6 +268,48 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
         @Override
         public CharSequence getPageTitle(int position) {
             return mTitle[position];
+        }
+    }
+
+    @Event(R.id.userinfo_ct_colltoolbar)
+    private void changeBackground(View view){
+        Intent intent;
+        intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent,SET_BACK_GROUND);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case SET_BACK_GROUND://选择相册之后的处理
+                if (resultCode == RESULT_OK) {
+                    String url=RxPhotoUtils.getRealFilePath(UserInfoActivity.this,data.getData());
+                    setBack(url);
+                }
+                break;
+            case RxPhotoUtils.CROP_IMAGE://普通裁剪后的处理
+                Log.e("asd",data.getData()+"");
+//               RequestUpdateAvatar(new File(RxPhotoUtils.getRealFilePath(activity, RxPhotoUtils.cropImageUri)));
+            default:
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    public void setBack(String path){
+        MyPrefence myPrefence=MyPrefence.getInstance(this);
+        myPrefence.saveString(USER_BACKGROUND,path);
+        Bitmap bitmap = RxImageUtils.getBitmap(path);
+        Drawable drawable=RxImageUtils.bitmap2Drawable(bitmap);
+        userbackground.setBackground(drawable);
+    }
+    public void getBack(){
+        MyPrefence myPrefence=MyPrefence.getInstance(this);
+        String path=myPrefence.getString(USER_BACKGROUND);
+
+        if(path!=null) {
+            LOG(path);
+            Bitmap bitmap = RxImageUtils.getBitmap(path);
+            Drawable drawable = RxImageUtils.bitmap2Drawable(bitmap);
+            userbackground.setBackground(drawable);
         }
     }
 

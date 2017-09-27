@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/mytoolbar"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/base_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+
+
+    </android.support.v7.widget.RecyclerView>
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/joingood_btn_addgood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        fab:fab_colorNormal="@color/pink"
+        fab:fab_icon="@drawable/ic_add"
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+    </com.getbase.floatingactionbutton.FloatingActionButton>
+
+</RelativeLayout>

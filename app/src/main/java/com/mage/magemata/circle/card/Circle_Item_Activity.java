@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.google.gson.Gson;
@@ -43,6 +44,7 @@ import com.vondear.rxtools.RxDataUtils;
 
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -60,12 +62,12 @@ public class Circle_Item_Activity extends SlidingUpBaseActivity<ObservableRecycl
     private  ArrayList<Circle_Item> circlelist = new ArrayList<>();
     public static String circle_item_ID;
     private Circle_itemAdapter madapter;
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @ViewInject(R.id.circle_item_menu)
+    FloatingActionsMenu menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        StatusBarUtil.setTranslucentForCoordinatorLayout (Circle_Item_Activity.this,0);
         initData();
     }
 
@@ -170,21 +172,29 @@ public class Circle_Item_Activity extends SlidingUpBaseActivity<ObservableRecycl
     @Event(R.id.circle_but_addlink)
     private void addreward(View  view){
 
-        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"悬赏");
+//        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"悬赏");
     }
 
     @Event(R.id.circle_but_addphoto)
     private void addphoto(View  view){
-        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"图片");
+//        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"图片");
+//        menu.collapse();
+
     }@Event(R.id.circle_but_addtext)
     private void addlink(View  view){
-        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"链接");
+        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"文字");
+        menu.collapse();
+
     }@Event(R.id.circle_but_addvideo)
     private void addtext(View  view){
-        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"文字");
+//        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"文字");
+//        menu.collapse();
+
     }@Event(R.id.circle_but_addreward)
     private void addvideo(View  view){
-        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"视频");
+//        AddCircle_Item_Activity.actionStart(Circle_Item_Activity.this,"视频");
+//        menu.collapse();
+
     }
 
 

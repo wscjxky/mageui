@@ -45,6 +45,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="2"
+
                 android:scrollHorizontally="true"
                 android:text="朋友圈"
                 android:textSize="17sp" />

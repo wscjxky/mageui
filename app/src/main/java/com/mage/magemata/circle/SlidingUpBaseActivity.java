@@ -29,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
@@ -44,6 +45,7 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.view.annotation.ViewInject;
 
 import java.util.Map;
 import java.util.Objects;
@@ -109,6 +111,7 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
     private boolean mHeaderIsNotAtBottom;
     private String title="哈利波特";
     private ActionBar ab;
+    private FloatingActionsMenu menu;
 
     private void loadData(){
         String circle_id= MyPrefence.getInstance(this).getInt(CIRCLE_ID)+"";
@@ -152,6 +155,7 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
         ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle(title);
+            ab.setDisplayHomeAsUpEnabled(true);
         }
 
         mToolbarColor = getResources().getColor(R.color.colorPrimary);
@@ -178,6 +182,9 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
             }
         });
         mScrollable = createScrollable();
+
+
+        menu=(FloatingActionsMenu) findViewById(R.id.circle_item_menu);
 
         button_heart =(ShineButton) findViewById(R.id.circle_but_subscribe);
         button_heart.init(this);
@@ -471,9 +478,9 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
         }
         boolean shouldBeWhite = getAnchorYBottom() == ViewHelper.getTranslationY(mInterceptionLayout);
         if (!mHeaderIsAtBottom && !mHeaderColorChangedToBottom && shouldBeWhite) {
-            //关键点 修改点
-            mHeader.setVisibility(View.INVISIBLE);
-
+            //关键点 修改点  初始情况
+//            mHeader.setVisibility(View.INVISIBLE);
+            menu.setVisibility(View.INVISIBLE);
             mHeaderIsAtBottom = true;
             mHeaderIsNotAtBottom = false;
             if (animated) {
@@ -491,7 +498,9 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
                 changeHeaderBarColor(1);
             }
         } else if (!mHeaderIsNotAtBottom && !shouldBeWhite) {
-            mHeader.setVisibility(View.VISIBLE);
+//            mHeader.setVisibility(View.VISIBLE);
+            menu.setVisibility(View.VISIBLE);
+
             mHeaderIsAtBottom = false;
             mHeaderIsNotAtBottom = true;
             if (animated) {

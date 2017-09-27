@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:layout_marginBottom="9dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
+    app:cardCornerRadius="6dp"
+    app:cardBackgroundColor="@color/lavenderblush"
+    android:alpha="0.9"
+    app:elevation="1dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/base_iv_logo"
+        android:layout_toEndOf="@+id/base_iv_logo"
+        android:layout_alignBottom="@+id/base_iv_logo"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:orientation="horizontal">
+            <TextView
+                android:text="卡"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/base_tv_title"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="18sp"
+                android:layout_marginTop="2dp"
+
+                />
+
+            <CheckBox
+                android:id="@+id/base_cb_status"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_alignParentRight="true"
+                android:text="已认领"
+                android:textAlignment="textStart" />
+
+        </RelativeLayout>
+
+
+
+        <TextView
+
+            android:text="不见了不见了不见了不见了不见了不见了不见了不见了"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/base_tv_content"
+            android:fontFamily="sans-serif"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:layout_weight="0.97"
+            android:layout_below="@+id/base_cb_status"
+            />
+
+        <TextView
+            android:text="2017-04-30 12:00:23"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/base_tv_time"
+            android:fontFamily="sans-serif"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/base_tv_title"
+            android:layout_toEndOf="@+id/base_tv_title"
+
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:src="@mipmap/logo2"
+        android:layout_width="70dp"
+        android:id="@+id/base_iv_logo"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>
+</android.support.v7.widget.CardView>
