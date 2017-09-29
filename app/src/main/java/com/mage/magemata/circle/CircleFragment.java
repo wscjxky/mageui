@@ -154,7 +154,7 @@ public class CircleFragment extends BaseFragment {
             helper.setText(R.id.circlef_tv_content, item.getContent());
             Picasso.with(mAppCompatActivity)
                     .load(item.getImage())
-                    .resize(90, 90)
+                    .resize(70, 70)
                     .centerCrop()
                     .into( (ImageView)helper.getView(R.id.circlef_iv_logo));
             helper.setText(R.id.circlef_tv_title, item.getTitle());

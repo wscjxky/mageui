@@ -33,13 +33,17 @@ import java.util.ArrayList;
 public class ChatFragment extends BaseFragment implements DialogsListAdapter.OnDialogClickListener<Dialog>, DialogsListAdapter.OnDialogLongClickListener<Dialog>  {
     @ViewInject(R.id.mychat_dialoglist)
     private  DialogsList dialogsList;
-    private   User NEWUSER;
+    public  static    User NEWUSER;
+    public  static    User REUSER;
+
     private DialogsListAdapter<Dialog> dialogsAdapter;
     private ImageLoader imageLoader;
 
     @Override
     protected void initData() {
         NEWUSER = new User("2","我是卖家","http://img.qq745.com/uploads/allimg/141231/1-1412310J544-51.jpg");
+        REUSER = new User("1","我是","http://img.qq745.com/uploads/allimg/141231/1-1412310J544-51.jpg");
+
         imageLoader = new ImageLoader() {
             @Override
             public void loadImage(ImageView imageView, String url) {
@@ -89,7 +93,7 @@ public class ChatFragment extends BaseFragment implements DialogsListAdapter.OnD
     @Override
     public void onDialogClick(Dialog dialog) {
 //        EventBus.getDefault().postSticky(dialog);
-//        MychatActivity.actionStart(activity);
+        readyGo(ChatActivity.class);
     }
     @Override
     public void onDialogLongClick(Dialog dialog) {

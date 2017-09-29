@@ -7,6 +7,7 @@ import com.stfalcon.chatkit.commons.models.IUser;
  */
 
 public class User  implements IUser  {
+
     @Override
     public String getId() {
         return user_id;
@@ -32,11 +33,13 @@ public class User  implements IUser  {
 
 
 
-    public String username,password,name,phone,profile,gender,college;
+    public String account,password,name,phone,profile,gender,college;
     public String content;
     public String createtime;
     public String user_id;
-
+    public String getAccount(){
+        return account;
+    }
     public String getContent() {
         return content;
     }
@@ -44,13 +47,9 @@ public class User  implements IUser  {
         return createtime;
     }
 //登陆用的
-
-
         public String getPhone() {
             return phone;
         }
-
-
         public String  getProfile() {
             return profile;
         }

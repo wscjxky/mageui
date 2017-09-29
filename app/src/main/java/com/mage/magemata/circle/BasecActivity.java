@@ -27,6 +27,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.mage.magemata.R;
+import com.mage.magemata.circle.card.SimpleHeaderRecyclerAdapter;
 
 import java.util.ArrayList;
 

@@ -27,7 +27,6 @@ public class Constant {
 
     public  static  String POST_CIRCLE_ITEM_COMMENT=GET_CIRCLE_ITEM+"comment";
     public  static  String POST_CIRCLE_ITEM=GET_CIRCLE+"item";
-    public  static  String POST_CIRCLE=ROOT_URL+"circle";
 
     public static final String T_USER_ID = "USER_ID";
     public static final String CIRCLE_ID = "CIRCLE_ID";

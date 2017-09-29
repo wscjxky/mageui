@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 else{
                     Map<String, String> userinfo=new HashMap<String, String>();
-                    userinfo.put("username",loginUser.getEditText().getText().toString());
+                    userinfo.put("account",loginUser.getEditText().getText().toString());
                     userinfo.put("password",loginPass.getEditText().getText().toString());
                     httpPost(GET_USERLOGIN, userinfo, new Callback.CommonCallback<JSONObject>() {
                         @Override
@@ -134,7 +134,7 @@ public class LoginActivity extends BaseActivity {
                     showErrorToast("输入不能为空");
                 } else {
                     Map<String, String> userinfo = new HashMap<String, String>();
-                    userinfo.put("username", registerUser.getEditText().getText().toString());
+                    userinfo.put("account", registerUser.getEditText().getText().toString());
                     userinfo.put("password", registerPass.getEditText().getText().toString());
                     httpPost(POST_USERREGISET, userinfo, new Callback.CommonCallback<String>() {
                         @Override

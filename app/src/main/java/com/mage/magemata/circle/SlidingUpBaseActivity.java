@@ -114,8 +114,10 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BasecA
     private FloatingActionsMenu menu;
 
     private void loadData(){
+
         String circle_id= MyPrefence.getInstance(this).getInt(CIRCLE_ID)+"";
         VALUE_CIRCLE_ID=circle_id;
+
         httpGet(GET_CIRCLE+"/"+ circle_id,new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

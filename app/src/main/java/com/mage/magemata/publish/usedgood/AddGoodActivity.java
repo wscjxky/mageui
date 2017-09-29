@@ -83,8 +83,8 @@ public class AddGoodActivity  extends BaseActivity {
         map.put("price", price.getText().toString());
         map.put("phone", phone.getText().toString());
         map.put("image", uploadimage_URL);
-        map.put("user_id", getUserId() + "");
-        map.put("user_name", getUserInfo().getuserName());
+        map.put("user_id", getUserInfo().user_id);
+        map.put("user_name", getUserInfo().name);
         map.put("bargin", bargin.isChecked() ? "不支持" : "支持");
         httpPost(POST_URL, map, new Callback.CommonCallback<String>() {
             @Override

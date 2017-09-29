@@ -123,7 +123,7 @@ public  class PublicMethod {
         String post_History=ROOT_URL+"userhistory";
         RequestParams params = new RequestParams(post_History);
         params.addQueryStringParameter("content", content);
-        params.addQueryStringParameter("content", user_id+"");
+        params.addQueryStringParameter("user_id", user_id);
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

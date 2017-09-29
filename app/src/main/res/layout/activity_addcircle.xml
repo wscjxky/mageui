@@ -12,7 +12,7 @@
     <com.github.florent37.materialtextfield.MaterialTextField
         style="@style/textfield"
         app:mtf_labelColor="@color/hot_pink"
-        app:mtf_image="@android:drawable/ic_dialog_email">
+        app:mtf_image="@android:drawable/ic_menu_edit">
 
         <EditText
             android:id="@+id/addcircle_et_title"
@@ -26,7 +26,7 @@
     <com.github.florent37.materialtextfield.MaterialTextField
         style="@style/textfield"
         app:mtf_labelColor="@color/hot_pink"
-        app:mtf_image="@android:drawable/ic_dialog_email">
+        app:mtf_image="@android:drawable/ic_menu_edit">
         <EditText
             android:id="@+id/addcircle_et_content"
 
@@ -41,7 +41,7 @@
     <com.github.florent37.materialtextfield.MaterialTextField
         style="@style/textfield"
         app:mtf_labelColor="@color/hot_pink"
-        app:mtf_image="@android:drawable/ic_dialog_email">
+        app:mtf_image="@android:drawable/ic_menu_edit">
 
         <EditText
             android:id="@+id/addcircle_et_phone"

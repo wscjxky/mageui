@@ -21,6 +21,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM;
 import static com.mage.magemata.constant.Constant.VALUE_CIRCLE_ID;
+import static com.mage.magemata.util.PublicMethod.historyPost;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 
 /**
@@ -29,8 +30,8 @@ import static com.mage.magemata.util.PublicMethod.httpPost;
 
 public class AddCircle_Item_Activity extends BaseActivity {
     private String url = POST_CIRCLE_ITEM;
-    @ViewInject(R.id.addcard_et_title)
-    EditText title;
+//    @ViewInject(R.id.addcard_et_title)
+//    EditText title;
     @ViewInject(R.id.addcard_et_content)
     EditText content;
 
@@ -58,14 +59,19 @@ public class AddCircle_Item_Activity extends BaseActivity {
 
     @Event(R.id.addcard_btn_submit)
     private void submit(View view) {
-        if (TextUtils.isEmpty(title.getText().toString()) || TextUtils.isEmpty(content.getText().toString())) {
-            showErrorToast("不可为空哦");
+        if (
+//                TextUtils.isEmpty(title.getText().toString()) ||
+                TextUtils.isEmpty(content.getText().toString()))
+        {
+            showErrorToast("内容不可为空哦");
         } else {
             getConfirmDialog().setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                     post();
+                    historyPost("添加了一个新圈子条目", getUserId());
                     finish();
+
                 }
             })
                     .show();
@@ -79,34 +85,34 @@ public class AddCircle_Item_Activity extends BaseActivity {
         context.startActivity(intent);
     }
     private void  post(){
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("circle_id", VALUE_CIRCLE_ID);
-        map.put("title", title.getText().toString());
-        map.put("content", content.getText().toString());
-        map.put("type", "文字");
-        map.put("user_id", MyPrefence.getInstance(AddCircle_Item_Activity.this).getUserId()+"");
-        httpPost(url, map, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                showSuccToast("成功啦");
-                finish();
-            }
+         Map<String, String> map = new HashMap<String, String>();
+            map.put("circle_id", VALUE_CIRCLE_ID);
+//            map.put("title", title.getText().toString());
+            map.put("content", content.getText().toString());
+            map.put("type", "文字");
+            map.put("user_id", getUserId());
+            httpPost(url, map, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    showSuccToast("成功啦");
+                    finish();
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                showSuccToast("失败了");
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    showSuccToast("失败了");
+                }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
+                @Override
+                public void onFinished() {
 
-            }
+                }
 
-        });
-    }
+            });
+        }
 }

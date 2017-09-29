@@ -73,7 +73,7 @@ public class UserPageFragment extends BaseFragment {
                         followlist.clear();
                         followlist = new Gson().fromJson(result.toString(), new TypeToken<ArrayList<User>>() {
                         }.getType());
-                        LOG(followlist.get(0).getuserName());
+                        LOG(followlist.get(0).account);
                         mFollowerAdapter.setNewData(followlist);
                         mFollowerAdapter.notifyDataSetChanged();
                     }
@@ -97,7 +97,7 @@ public class UserPageFragment extends BaseFragment {
                         followlist.clear();
                         followlist = new Gson().fromJson(result.toString(), new TypeToken<ArrayList<User>>() {
                         }.getType());
-                        LOG(followlist.get(0).getuserName());
+                        LOG(followlist.get(0).account);
                         mFollowerAdapter.setNewData(followlist);
                         mFollowerAdapter.notifyDataSetChanged();
                     }
@@ -205,7 +205,7 @@ public class UserPageFragment extends BaseFragment {
                         .centerCrop()
                         .into((CircleImageView) helper.getView(R.id.follow_item_portrait));
             }
-            helper.setText(R.id.follow_item_name, item.getuserName());
+            helper.setText(R.id.follow_item_name, item.name);
         }
     }
 

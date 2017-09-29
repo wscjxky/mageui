@@ -14,20 +14,24 @@ import com.mage.magemata.util.MyPrefence;
 import com.mage.magemata.util.MySweetAlertDialog;
 import com.vondear.rxtools.RxPhotoUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.mage.magemata.constant.Constant.POST_CIRCLE;
 import static com.mage.magemata.constant.Constant.POST_CIRCLE_ITEM;
+import static com.mage.magemata.constant.Constant.ROOT_URL;
 import static com.mage.magemata.constant.Constant.VALUE_CIRCLE_ID;
 import static com.mage.magemata.util.PublicMethod.LOG;
+import static com.mage.magemata.util.PublicMethod.historyPost;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 
 /**
@@ -35,7 +39,8 @@ import static com.mage.magemata.util.PublicMethod.httpPost;
  */
 
 public class AddCircleActivity extends BaseActivity {
-    private String url = POST_CIRCLE;
+    private     String POST_CIRCLE=ROOT_URL+"circle";
+
 
     @ViewInject(R.id.addcircle_et_title)
     EditText title;
@@ -66,8 +71,9 @@ public class AddCircleActivity extends BaseActivity {
 
     @Event(R.id.addcircle_btn_submit)
     private void submit(View view) {
-        if (TextUtils.isEmpty(title.getText().toString()) || TextUtils.isEmpty(content.getText().toString())) {
-            showErrorToast("不可为空哦");
+        if (TextUtils.isEmpty(title.getText().toString()) || TextUtils.isEmpty(content.getText().toString())
+                ||uploadimage_URL==null) {
+            showErrorToast(getString(R.string.empty_warning));
         }
 
         else {
@@ -75,6 +81,7 @@ public class AddCircleActivity extends BaseActivity {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                     post();
+                    historyPost("添加了一个新圈子", getUserId());
                     finish();
                 }
             })
@@ -91,13 +98,20 @@ public class AddCircleActivity extends BaseActivity {
         map.put("title", title.getText().toString());
         map.put("content", content.getText().toString());
         map.put("image", uploadimage_URL);
-        map.put("user_id", MyPrefence.getInstance(AddCircleActivity.this).getUserId()+"");
-        httpPost(url, map, new Callback.CommonCallback<String>() {
+        LOG(getUserId());
+        map.put("user_id", getUserId());
+        httpPost(POST_CIRCLE, map, new Callback.CommonCallback<JSONObject>() {
             @Override
-            public void onSuccess(String result) {
-                Log.e("result",result);
-                showSuccToast("成功啦");
-                finish();
+            public void onSuccess(JSONObject result) {
+                try {
+                    if (Objects.equals(result.getString("state"), "ok")){
+                        showSuccToast("成功啦");
+                        finish();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

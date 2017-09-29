@@ -53,6 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.mage.magemata.constant.Constant.CIRCLE_ID;
 import static com.mage.magemata.constant.Constant.CIRCLE_ITEM_ID;
+import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.constant.Constant.GET_CIRCLE_ITEM;
 import static com.mage.magemata.util.PublicMethod.httpGet;
 import static com.mage.magemata.util.PublicMethod.isJsonarray0;
@@ -131,7 +132,7 @@ public class Circle_Item_Activity extends SlidingUpBaseActivity<ObservableRecycl
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle=new Bundle();
                 bundle.putInt("type",1);
-                bundle.putInt("user_id", madapter.getItem(position).getUserid());
+                bundle.putString(FLASH_USER_ID, madapter.getItem(position).user_id);
 
                 UserInfoActivity.actionstart(Circle_Item_Activity.this,bundle);
             }

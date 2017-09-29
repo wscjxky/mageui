@@ -6,22 +6,20 @@
     android:clipChildren="false">
 
 
+    <ImageView
+        android:id="@+id/image_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-        <ImageView
-            android:id="@+id/image_header"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:background="@drawable/backcolor1" />
-
+        android:background="@drawable/back3" />
 
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/flexible_space_image_height"
-        android:scaleType="centerCrop"
-        android:background="@drawable/backcolor2" />
+        android:background="@drawable/food4"
+        android:scaleType="centerCrop" />
 
     <com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout
         android:id="@+id/scroll_wrapper"

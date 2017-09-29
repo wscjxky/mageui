@@ -67,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //            x.view().inject(this);
 
     @ViewInject(R.id.upload_iv_addimg)
-    CircleImageView uploadimg;
+    public CircleImageView uploadimg;
     public String uploadimage_URL;
     Toasty mToast;
     private MySweetAlertDialog mDialog;

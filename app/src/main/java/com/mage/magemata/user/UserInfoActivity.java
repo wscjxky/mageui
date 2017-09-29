@@ -67,6 +67,7 @@ import static com.mage.magemata.constant.Constant.USER_FOLLOW;
 import static com.mage.magemata.constant.Constant.USER_ID;
 import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.getMap;
+import static com.mage.magemata.util.PublicMethod.historyPost;
 import static com.mage.magemata.util.PublicMethod.httpGet;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 import static com.vondear.rxtools.RxPhotoUtils.GET_IMAGE_FROM_PHONE;
@@ -126,7 +127,8 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
                     @Override
                     public void onSuccess(String result) {
                         if(Objects.equals(result, "ok")) {
-                            showErrorToast(R.string.subscribe_success);
+                            showSuccToast(R.string.subscribe_success);
+                            historyPost("关注了新朋友",getUserId());
                             follow_btn.setChecked(true);
                         }
                         else {

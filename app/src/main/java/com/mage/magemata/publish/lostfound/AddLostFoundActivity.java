@@ -20,7 +20,6 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import static com.mage.magemata.constant.Constant.POST_CIRCLE;
 import static com.mage.magemata.util.PublicMethod.httpPost;
 
 /**
@@ -28,7 +27,7 @@ import static com.mage.magemata.util.PublicMethod.httpPost;
  */
 
 public class AddLostFoundActivity extends BaseActivity {
-    private String url = POST_CIRCLE;
+    private String url = "";
     @ViewInject(R.id.addcircle_et_title)
     EditText title;
     @ViewInject(R.id.addcircle_et_content)
