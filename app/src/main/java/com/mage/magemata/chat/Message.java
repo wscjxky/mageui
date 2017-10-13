@@ -20,6 +20,7 @@ public class Message implements IMessage,
     private Image image;
     private Voice voice;
 
+
     public Message(String id, User user, String text) {
         this(id, user, text, new Date());
     }

@@ -64,7 +64,6 @@ public class MainActivity extends BaseActivity {
                 .setMode(MaterialMode.HIDE_TEXT )//这里可以设置样式模式，总共可以组合出4种效果
                 .build();
         navigationController.setHasMessage(0,true);
-
         navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {

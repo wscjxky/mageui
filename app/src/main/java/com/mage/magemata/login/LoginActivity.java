@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initData() {
         myPrefence=MyPrefence.getInstance(LoginActivity.this);
-        if(  myPrefence.isLogined()){
+        if(myPrefence.isLogined()){
             showSuccToast("您已经登陆了");
             MainActivity.actionstart(LoginActivity.this);
             finish();

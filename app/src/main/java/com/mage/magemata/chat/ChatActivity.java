@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 
 import com.mage.magemata.R;
 import com.mage.magemata.main.BaseActivity;
+import com.mage.magemata.user.User;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.messages.MessageInput;
@@ -40,15 +41,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static android.view.View.VISIBLE;
-import static com.mage.magemata.chat.ChatFragment.NEWUSER;
-import static com.mage.magemata.chat.ChatFragment.REUSER;
 
 /**
  * Created by Administrator on 2017/9/28.
  */
 
 public class ChatActivity extends BaseActivity implements MessageInput.InputListener  ,MessageInput.AttachmentsListener{
-    private int creatAt=0;
     protected MessagesListAdapter<Message> messagesAdapter;
     @ViewInject(R.id.mychat_messagesList)
     private MessagesList messagesList;
@@ -68,7 +66,7 @@ public class ChatActivity extends BaseActivity implements MessageInput.InputList
     @Override
     public boolean onSubmit(CharSequence input) {
         messagesAdapter.addToStart(
-                new Message("0", NEWUSER, input.toString()),true);
+                new Message("0", new User("0","sdaf","http://47.94.251.202/mage/public/uploads/-1811356438.jpg"), input.toString()),true);
         try {
             Robot_Get(input.toString());
         } catch (IOException e) {
@@ -84,7 +82,7 @@ public class ChatActivity extends BaseActivity implements MessageInput.InputList
             public void onSuccess(JSONObject jsonObject) {
                 try {
                     messagesAdapter.addToStart(
-                            new Message("1", REUSER, jsonObject.getString("content")), true);
+                            new Message("1", getUserInfo(), jsonObject.getString("content")), true);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -116,7 +114,7 @@ public class ChatActivity extends BaseActivity implements MessageInput.InputList
                 Picasso.with(ChatActivity.this).load(url).into(imageView);
             }
         };
-        messagesAdapter = new MessagesListAdapter<>(NEWUSER.getId(), imageLoader);
+        messagesAdapter = new MessagesListAdapter<>(getUserId(), imageLoader);
         messagesList.setAdapter(messagesAdapter);
         messageInput.setInputListener(this);
         messageInput.setAttachmentsListener(this);

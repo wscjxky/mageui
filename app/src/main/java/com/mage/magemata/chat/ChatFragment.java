@@ -4,6 +4,7 @@ package com.mage.magemata.chat;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mage.magemata.R;
+import com.mage.magemata.circle.Circle;
 import com.mage.magemata.main.BaseFragment;
 import com.mage.magemata.user.User;
 import com.squareup.picasso.Picasso;
@@ -20,10 +24,19 @@ import com.stfalcon.chatkit.dialogs.DialogsList;
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+
+import static com.mage.magemata.constant.Constant.GET_CIRCLE;
+import static com.mage.magemata.constant.Constant.ROOT_URL;
+import static com.mage.magemata.util.PublicMethod.LOG;
+import static com.mage.magemata.util.PublicMethod.httpGet;
 
 
 /**
@@ -33,16 +46,14 @@ import java.util.ArrayList;
 public class ChatFragment extends BaseFragment implements DialogsListAdapter.OnDialogClickListener<Dialog>, DialogsListAdapter.OnDialogLongClickListener<Dialog>  {
     @ViewInject(R.id.mychat_dialoglist)
     private  DialogsList dialogsList;
-    public  static    User NEWUSER;
-    public  static    User REUSER;
 
+    private ArrayList<Dialog> dialogslist = new ArrayList<>();
     private DialogsListAdapter<Dialog> dialogsAdapter;
     private ImageLoader imageLoader;
+    private String GET_DIALOG=ROOT_URL+"dialog/";
 
     @Override
     protected void initData() {
-        NEWUSER = new User("2","我是卖家","http://img.qq745.com/uploads/allimg/141231/1-1412310J544-51.jpg");
-        REUSER = new User("1","我是","http://img.qq745.com/uploads/allimg/141231/1-1412310J544-51.jpg");
 
         imageLoader = new ImageLoader() {
             @Override
@@ -51,31 +62,70 @@ public class ChatFragment extends BaseFragment implements DialogsListAdapter.OnD
             }
         };
         dialogsAdapter = new DialogsListAdapter<>(R.layout.chat_item,imageLoader);
-        dialogsAdapter.setItems(getDialogs());
 
         dialogsAdapter.setOnDialogClickListener(this);
         dialogsAdapter.setOnDialogLongClickListener(this);
+        dialogsAdapter.setItems(dialogslist);
 
         dialogsList.setAdapter(dialogsAdapter);
     }
 
     @Override
     protected void setData() {
+        httpGet(GET_DIALOG+getUserId(), new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                String state= null;
+                try {
+
+                    state = result.getString("state");
+                    switch (state){
+                        case "ok":
+                            dialogslist.clear();
+                            JSONArray jsonArray=result.getJSONArray("data");
+                            for(int i=0;i<jsonArray.length();i++){
+                                JSONObject job = jsonArray.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
+                                Dialog dialog=new Dialog(job.get("dialog_id").toString(),
+                                        job.get("chatuser_name").toString()
+                                        ,job.get("chatuser_image").toString()
+
+                                        ,getUserInfo()
+                                        ,job.get("recenttime").toString());
+                                dialogslist.add(dialog);
+                            }
+                            break;
+                        case "empty":
+                            dialogslist.clear();
+                            showSuccToast(R.string.emptysearch);
+                            break;
+                        default:
+                            LOG("error");
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("sdf",ex.toString());
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                dialogsAdapter.notifyDataSetChanged();
+            }
+        });
 
     }
 
-
-    private  ArrayList<Dialog> getDialogs() {
-        ArrayList<Dialog> chats = new ArrayList<>();
-        ArrayList<User> users = new ArrayList<>();
-        users.add(NEWUSER);
-        Dialog dialog2 = new Dialog("0", "我是小骆", "http://img.qq745.com/uploads/allimg/141231/1-1412310J544-51.jpg", users, new Message("1", NEWUSER, "第一个单聊测试"), 2);
-        chats.add(dialog2);
-        chats.add(dialog2);
-
-        chats.add(dialog2);
-        return chats;
-    }
 
     //for example
     private void onNewMessage(String dialogId, Message message) {
@@ -92,11 +142,19 @@ public class ChatFragment extends BaseFragment implements DialogsListAdapter.OnD
     }
     @Override
     public void onDialogClick(Dialog dialog) {
-//        EventBus.getDefault().postSticky(dialog);
         readyGo(ChatActivity.class);
     }
     @Override
     public void onDialogLongClick(Dialog dialog) {
         Toast.makeText(mAppCompatActivity,"长点击",Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+//            setData();
+        } else {
+
+        }
     }
 }
