@@ -52,6 +52,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
+import static com.mage.magemata.constant.Constant.CIRCLE_ID;
+import static com.mage.magemata.constant.Constant.CIRCLE_TITLE;
+import static com.mage.magemata.constant.Constant.GOOD_ID;
 import static com.mage.magemata.constant.Constant.UPLOAD;
 import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.zipImage;
@@ -115,12 +118,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         return bundle.getInt(key);
     }
 
+
+    //储存myprefence
+    protected void setGoodId(int id){
+        MyPrefence.getInstance(this).saveInt(GOOD_ID,id);
+    }
+
     //获取用户信息
     protected String getUserId(){
         return MyPrefence.getInstance(this).getUserId();
     }
     protected User getUserInfo(){
         return MyPrefence.getInstance(this).getUser();
+    }
+    protected int getCircleId(){
+        return  MyPrefence.getInstance(this).getInt(CIRCLE_ID);
+    }
+    protected String getCircleTitle(){
+        return MyPrefence.getInstance(this).getString(CIRCLE_TITLE);
+    }
+    protected int getGoodId(){
+        return MyPrefence.getInstance(this).getInt(GOOD_ID);
     }
 
     //打开imagepick

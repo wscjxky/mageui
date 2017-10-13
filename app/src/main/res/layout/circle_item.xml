@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="94dp"
+    android:layout_height="@dimen/item_width"
     android:layout_marginLeft="3dp"
     android:layout_marginRight="3dp"
-    android:layout_marginTop="15dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="12dp"
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="7dp"
     app:cardBackgroundColor="@color/lavenderblush"
     app:elevation="1dp">
 
@@ -20,18 +20,32 @@
         android:orientation="horizontal"
         android:padding="5dp"
         android:weightSum="1">
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circle_iv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right" />
 
+        <TextView
+            android:id="@+id/circle_tv_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="用户名"
+            android:textAlignment="center"
+            android:textSize="@dimen/dp_10" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="95dp"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
@@ -41,18 +55,19 @@
                 android:layout_weight="1"
                 android:text="朋友圈"
                 android:textAppearance="@style/TextAppearance.AppCompat"
-
+                android:visibility="gone"
                 android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/circle_tv_content"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:scrollHorizontally="true"
                 android:text="朋友圈"
+                android:layout_gravity="center"
+                android:textAlignment="center"
                 android:textSize="15sp" />
 
         </LinearLayout>

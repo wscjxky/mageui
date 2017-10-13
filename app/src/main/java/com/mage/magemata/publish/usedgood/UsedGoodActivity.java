@@ -1,10 +1,6 @@
 package com.mage.magemata.publish.usedgood;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -22,16 +18,10 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.header.GoogleDotView;
 import com.mage.magemata.R;
-import com.mage.magemata.circle.Circle;
-import com.mage.magemata.circle.CircleFragment;
-import com.mage.magemata.circle.card.Circle_Item_Activity;
 import com.mage.magemata.main.BaseActivity;
-import com.mage.magemata.user.UserInfoActivity;
-import com.mage.magemata.util.MyPrefence;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -39,13 +29,9 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
-import static com.mage.magemata.constant.Constant.CIRCLE_ID;
-import static com.mage.magemata.constant.Constant.GET_CIRCLE;
-import static com.mage.magemata.constant.Constant.GOOD_ID;
 import static com.mage.magemata.constant.Constant.ROOT_URL;
 import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.httpGet;
@@ -79,8 +65,7 @@ public class UsedGoodActivity extends BaseActivity {
         usedGoodAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                CURRENT_GOOD_ID=usedGoodAdapter.getItem(position)
-                        .getGood_id();
+                setGoodId(usedGoodAdapter.getItem(position).getGood_id());
                 readyGo(GoodInfoActivity.class);
             }
         });

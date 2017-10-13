@@ -38,6 +38,9 @@ import java.io.IOException;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
+import static com.mage.magemata.constant.Constant.CIRCLE_ID;
+import static com.mage.magemata.constant.Constant.CIRCLE_ITEM_ID;
+import static com.mage.magemata.constant.Constant.CIRCLE_TITLE;
 import static com.mage.magemata.constant.Constant.UPLOAD;
 import static com.mage.magemata.util.PublicMethod.zipImage;
 import static com.vondear.rxtools.RxPhotoUtils.GET_IMAGE_FROM_PHONE;
@@ -95,7 +98,18 @@ public abstract class BaseFragment extends Fragment {
         return MyPrefence.getInstance(mAppCompatActivity).getUser();
     }
 
-
+    protected void setCircleId(int id){
+        MyPrefence.getInstance(mAppCompatActivity).saveInt(CIRCLE_ID,id);
+    }
+    protected void setCircleTitle(String title){
+        MyPrefence.getInstance(mAppCompatActivity).saveString(CIRCLE_TITLE,title);
+    }
+    protected void setCircleItemId(int id){
+        MyPrefence.getInstance(mAppCompatActivity).saveInt(CIRCLE_ITEM_ID,id);
+    }
+    protected int getCircleId(){
+        return  MyPrefence.getInstance(mAppCompatActivity).getInt(CIRCLE_ID);
+    }
 
     //初始化toolbar
     public void initToolbar(String title, boolean isDisplayHomeAsUp) {
@@ -113,6 +127,13 @@ public abstract class BaseFragment extends Fragment {
             return mDialog.getConfirmDialog();
         }
         return null;
+    }
+    protected void showConfirmDialog(String content,SweetAlertDialog.OnSweetClickListener listener) {
+        if (null == mDialog) {
+            mDialog = new MySweetAlertDialog(mAppCompatActivity);
+        }
+        mDialog.showConfirmDialog(content,listener);
+        mDialog=null;
     }
 
     /**

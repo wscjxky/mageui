@@ -34,7 +34,7 @@
         android:layout_row="1"
         android:clickable="true"
         android:cropToPadding="false"
-        app:srcCompat="@mipmap/icon_findlost" />
+        app:srcCompat="@mipmap/ico_lost" />
 
     <ImageView
         android:id="@+id/publish_iv_findwork"

@@ -2,7 +2,6 @@ package com.mage.magemata.user;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,29 +12,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.ButtonBarLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.jaeger.library.StatusBarUtil;
 import com.mage.magemata.R;
-import com.mage.magemata.circle.Circle;
-import com.mage.magemata.circle.SlidingUpBaseActivity;
-import com.mage.magemata.circle.card.Circle_Item_Activity;
 import com.mage.magemata.main.BaseActivity;
-import com.mage.magemata.main.MainActivity;
-import com.mage.magemata.more.MoreFragment;
 import com.mage.magemata.util.MyPrefence;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
@@ -43,34 +27,26 @@ import com.vondear.rxtools.RxDataUtils;
 import com.vondear.rxtools.RxImageUtils;
 import com.vondear.rxtools.RxPhotoUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import es.dmoral.toasty.Toasty;
 
 import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.constant.Constant.FOLLOW_USER_ID;
 import static com.mage.magemata.constant.Constant.ROOT_URL;
 import static com.mage.magemata.constant.Constant.SET_BACK_GROUND;
-import static com.mage.magemata.constant.Constant.USER;
-import static com.mage.magemata.constant.Constant.USER_FOLLOW;
 import static com.mage.magemata.constant.Constant.USER_ID;
 import static com.mage.magemata.util.PublicMethod.LOG;
 import static com.mage.magemata.util.PublicMethod.getMap;
 import static com.mage.magemata.util.PublicMethod.historyPost;
 import static com.mage.magemata.util.PublicMethod.httpGet;
 import static com.mage.magemata.util.PublicMethod.httpPost;
-import static com.vondear.rxtools.RxPhotoUtils.GET_IMAGE_FROM_PHONE;
 
 /**
  * Created by Administrator on 2017/9/8.

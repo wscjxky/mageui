@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -23,11 +24,13 @@ import com.vondear.rxtools.RxImageUtils;
 
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.FileNotFoundException;
 import java.util.Objects;
 
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
+import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 public class MainActivity extends BaseActivity {
     @ViewInject(R.id.activty_navbar)
@@ -37,22 +40,43 @@ public class MainActivity extends BaseActivity {
     private MyViewPagerAdapter adapter;
     @ViewInject(R.id.main_background)
     RelativeLayout background;
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    private NavigationController navigationController;
+
+    //刷新界面
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSkin();
+
+    }
+    //6.0以下的必须用
+//    getResources().getColor(R.color.darkkhaki)
     @Override
     public void initData() {
         PublicMethod.requestPermission(this);
-        getSkin();
-
 //        PageNavigationView tab = (PageNavigationView) findViewById(R.id.activty_navbar);
-
-        NavigationController navigationController = tab.material()
-                .addItem(R.mipmap.tab_circle, "圈子",getColor(R.color.darkkhaki))
-                .addItem(R.mipmap.tab_publish, "发布",getColor(R.color.green))
-                .addItem(android.R.drawable.stat_notify_chat, "私聊",getColor(R.color.hot_pink))
-                .addItem(R.mipmap.ico_mychat_selected, "我的",getColor(R.color.darkblue))
-                .setDefaultColor(getColor(R.color.yellow))//未选中状态的颜色
-                .setMode(  MaterialMode.HIDE_TEXT )//这里可以设置样式模式，总共可以组合出4种效果
+         navigationController = tab.material()
+                .addItem(R.mipmap.tab_circle, "圈子",getResources().getColor(R.color.darkkhaki))
+                .addItem(R.mipmap.tab_publish, "发布",getResources().getColor(R.color.green))
+                .addItem(android.R.drawable.stat_notify_chat, "私聊",getResources().getColor(R.color.hot_pink))
+                .addItem(R.mipmap.ico_mychat_selected, "我的",getResources().getColor(R.color.darkblue))
+                .setDefaultColor(getResources().getColor(R.color.yellow))//未选中状态的颜色
+                .setMode(MaterialMode.HIDE_TEXT )//这里可以设置样式模式，总共可以组合出4种效果
                 .build();
+        navigationController.setHasMessage(0,true);
+
+        navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
+            @Override
+            public void onSelected(int index, int old) {
+                Log.i("asd","selected: " + index + " old: " + old);
+            }
+
+            @Override
+            public void onRepeat(int index) {
+                navigationController.setHasMessage(index,false);
+                Log.i("asd","onRepeat selected: " + index);
+            }
+        });
         adapter=new MyViewPagerAdapter(getSupportFragmentManager(),navigationController.getItemCount());
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
@@ -109,12 +133,20 @@ public class MainActivity extends BaseActivity {
     }
 
     public void getSkin() {
-        SharedPreferences skinSettingPreference = this.getSharedPreferences("background", Context.MODE_PRIVATE);
+        SharedPreferences skinSettingPreference = MainActivity.this.getSharedPreferences("background", Context.MODE_PRIVATE);
         String back = skinSettingPreference.getString("background", "");
-        Log.e("ASd",back);
-        if (!Objects.equals(back, "")) {
+        if (!Objects.equals(back, "")&&!back.contains("resource")) {
             Drawable drawable =RxImageUtils.bitmap2Drawable(RxImageUtils.getBitmap(back)) ;
             background.setBackground(drawable);
+        }
+        else if(!Objects.equals(back, "")){
+            Drawable d= null;
+            try {
+                d = Drawable.createFromStream(getContentResolver().openInputStream(Uri.parse(back)),null);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            background.setBackground(d);
         }
     }
 }

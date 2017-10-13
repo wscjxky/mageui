@@ -15,6 +15,11 @@
 -->
 <resources>
 
+
+    <!--My Item-->
+    <dimen name="item_width">81dp</dimen>
+
+
     <dimen name="toolbar_size">47dp</dimen>
 <!--shop-->
     <dimen name="item_menu_title_margin">5dp</dimen>

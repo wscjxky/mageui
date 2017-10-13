@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sackcentury.shinebuttonlib.ShineButton
+        android:id="@+id/circle_but_subscribe"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:src="@android:color/darker_gray"
+        app:allow_random_color="false"
+        app:big_shine_color="#FF6666"
+        app:btn_color="@android:color/darker_gray"
+        app:btn_fill_color="#FF6666"
+        app:click_animation_duration="200"
+        app:enable_flashing="false"
+        app:shine_animation_duration="1500"
+        app:shine_count="8"
+        app:shine_turn_angle="10"
+        app:siShape="@raw/star"
+        app:small_shine_color="#CC9999"
+        app:small_shine_offset_angle="20" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/mytoolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/circle_item_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|right|bottom"
+        fab:fab_addButtonColorNormal="@color/pink"
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_icon="@drawable/ic_fab_star"
+
+            fab:fab_title="添加文字" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addphoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_icon="@drawable/ic_fab_star"
+            fab:fab_title="添加图片" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_icon="@drawable/ic_fab_star"
+            fab:fab_title="添加链接" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addvideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_icon="@drawable/ic_fab_star"
+            fab:fab_title="添加视频" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/circle_but_addreward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pink"
+            app:fab_size="mini"
+            fab:fab_icon="@drawable/ic_fab_star"
+            fab:fab_title="添加悬赏" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</LinearLayout>

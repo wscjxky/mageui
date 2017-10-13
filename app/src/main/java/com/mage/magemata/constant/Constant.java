@@ -1,5 +1,6 @@
 package com.mage.magemata.constant;
 
+import com.mage.magemata.R;
 import com.mage.magemata.util.MyPrefence;
 
 /**
@@ -8,6 +9,8 @@ import com.mage.magemata.util.MyPrefence;
 
 public class Constant {
     public static final int SET_BACK_GROUND = 2000 ;
+    public  static  final  int ITEM_LOGO_SIZE=185;
+    public  static  final  int ITEM_PROFILE_SIZE=150;
 
     public  static  String UPLOAD="http://47.94.251.202/mage/public/index.php/upload";
     public  static  String SHOWIMAGE="http://47.94.251.202/mage/public/";
@@ -30,6 +33,8 @@ public class Constant {
 
     public static final String T_USER_ID = "USER_ID";
     public static final String CIRCLE_ID = "CIRCLE_ID";
+    public static final String CIRCLE_TITLE ="CIRCLE_TITLE" ;
+
     public static final String CIRCLE_ITEM_ID = "CIRCLE_ITEM_ID";
     public static final String GOOD_ID = "good_id";
 

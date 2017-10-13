@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Path;
+import android.os.Build;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -41,6 +42,7 @@ import static com.vondear.rxtools.RxImageUtils.save;
 import static com.vondear.rxtools.RxTimeUtils.getCurrentDateTime;
 import static com.vondear.rxtools.RxTimeUtils.getDate;
 import static com.vondear.rxtools.RxZipUtils.zipFile;
+import static org.xutils.http.HttpMethod.DELETE;
 
 /**
  * Created by Administrator on 2017/9/7.
@@ -61,17 +63,19 @@ public  class PublicMethod {
 
 //    获取权限
     public static void requestPermission(Activity activity) {
-        if (!AndPermission.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            AndPermission.with(activity)
-                    .requestCode(100)
-                    .permission(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
-                            Manifest.permission.MANAGE_DOCUMENTS,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.INTERNET)
-                    .send();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!AndPermission.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                AndPermission.with(activity)
+                        .requestCode(100)
+                        .permission(
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                                Manifest.permission.MANAGE_DOCUMENTS,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.INTERNET)
+                        .send();
+            }
         }
     }
     //    新建map
@@ -113,6 +117,12 @@ public  class PublicMethod {
         Log.e("url",url);
         RequestParams params = new RequestParams(url);
         x.http().get(params,callback);
+    }
+    //del请求
+    public static void httpDel(String url  ,Callback.CommonCallback<?> callback) {
+        Log.e("url",url);
+        RequestParams params = new RequestParams(url);
+        x.http().request(DELETE,params,callback);
     }
     public static void LOG(String s){
         Log.e("测试", s);

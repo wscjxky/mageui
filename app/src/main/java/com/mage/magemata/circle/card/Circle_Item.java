@@ -4,11 +4,11 @@ package com.mage.magemata.circle.card;
  * Created by Administrator on 2017/9/12.
  */
 
-class Circle_Item {
+public class Circle_Item {
     public int circle_item_id;
     public int circle_id;
     public String user_id;
-
+    public String user_name;
     public String title;
     public String createTime;
     public String content;
@@ -37,4 +37,5 @@ class Circle_Item {
     public String getUserImage() {
         return  user_image;
     }
+
 }

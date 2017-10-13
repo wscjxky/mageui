@@ -64,20 +64,20 @@ public class LoginActivity extends BaseActivity {
 
     private String video_url=ROOT_URL+"config/video";
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         PublicMethod.requestPermission(this);
         super.onCreate(savedInstanceState);
         initEvent();
-        setStatus(mViewNeedOffset);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setStatus(mViewNeedOffset);
+        }
 
     }
 
     @Override
     public void initData() {
-
         myPrefence=MyPrefence.getInstance(LoginActivity.this);
         if(  myPrefence.isLogined()){
             showSuccToast("您已经登陆了");
@@ -186,42 +186,53 @@ public class LoginActivity extends BaseActivity {
         Intent intent=new Intent(context,LoginActivity.class);
         context.startActivity(intent);
     }
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initEvent() {
-        httpGet(video_url, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                final Uri uri = Uri.parse(result);
-                final android.widget.MediaController mp=new android.widget.MediaController(LoginActivity.this);
-                mp.setVisibility(View.INVISIBLE);
-                videoView.setMediaController(mp);
-                videoView.setClickable(false);
-                videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        videoView.setVideoURI(uri);
-                        videoView.start();
-                    }
-                });
-                videoView.setVideoURI(uri);
-                videoView.start();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+        }
+        else {
+            httpGet(video_url, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    final Uri uri = Uri.parse(result);
+                    final android.widget.MediaController mp = new android.widget.MediaController(LoginActivity.this);
+                    mp.setVisibility(View.INVISIBLE);
+                    videoView.setMediaController(mp);
+                    videoView.setClickable(false);
+                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+//                        videoView.setVideoURI(uri);
+//                        videoView.start();
+                        }
+                    });
+                    videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                        @Override
+                        public boolean onError(MediaPlayer mp, int what, int extra) {
+                            videoView.pause();
+                            return false;
+                        }
+                    });
+                    videoView.setVideoURI(uri);
+                    videoView.start();
                 }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
+                @Override
+                public void onFinished() {
 
-            }
-        });
+                }
+            });
+        }
 //        String path= Environment.getExternalStorageDirectory().getPath() + "/test.mp4";
 //        String url="http://gslb.miaopai.com/stream/3rTNqo1qu~QGDMdYPVhql7N3zGiANkAmhYrWjg__.mp4";
 //        File file=new File(path);

@@ -12,12 +12,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jaeger.library.StatusBarUtil;
 import com.mage.magemata.R;
+import com.mage.magemata.chat.ChatActivity;
 import com.mage.magemata.main.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -52,19 +54,13 @@ public class GoodInfoActivity  extends BaseActivity{
 
     @Override
     public void initData() {
-
-    }
-
-    @Override
-    public void loadData() {
-        httpGet(GET_URL+getUserId(), new Callback.CommonCallback<JSONObject>() {
+        httpGet(GET_URL+getGoodId(), new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 try {
                     String state=result.getString("state");
                     switch (state){
                         case "ok":
-
                             List<Good> goods = new Gson().fromJson(result.getString("data"),new TypeToken<ArrayList<Good>>() {}.getType());
                             Good good=goods.get(0);
                             title.setText(good.getGood_name());
@@ -105,11 +101,19 @@ public class GoodInfoActivity  extends BaseActivity{
     }
 
     @Override
+    public void loadData() {
+
+    }
+
+    @Override
     public void setContentView() {
         setContentView(R.layout.activity_goodinfo);
         setStatus(view);
     }
-
+    @Event(R.id.usedgood_btn_chat)
+    private void chat(View view){
+        readyGo(ChatActivity.class);
+    }
     public static void actionstart(Context context){
         Intent intent=new Intent(context,GoodInfoActivity.class);
         context.startActivity(intent);

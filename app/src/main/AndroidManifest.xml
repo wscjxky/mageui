@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         tools:replace="android:icon"
@@ -37,13 +36,15 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".circle.card.AddCircle_Item_Activity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".circle.card.Circle_Item_Activity"
+        <activity android:name=".trash.Circle_Item_Activity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".circle.card.AddCardActivity"
+        <activity android:name=".trash.AddCardActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".circle.card.CardActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".circle.MyCircleActivity"
+        <activity android:name=".circle.card.CircleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".circle.mycircle.MyCircleActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".user.UserInfoActivity"
             android:screenOrientation="portrait"/>
@@ -56,6 +57,8 @@
         <activity android:name=".publish.usedgood.AddGoodActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".more.CheckVersionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".more.ChangeSkinActvity"
             android:screenOrientation="portrait"/>
         <activity android:name=".more.GpaActivity"
             android:windowSoftInputMode="adjustPan"

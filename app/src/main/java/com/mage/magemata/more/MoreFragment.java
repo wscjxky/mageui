@@ -58,10 +58,10 @@ public class MoreFragment extends BaseFragment {
 
     @Event(R.id.more_linel_changeskin)
     private void changskin(View view){
-
-        Intent intent;
-        intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent,SET_BACK_GROUND);
+            readyGo(ChangeSkinActvity.class);
+//        Intent intent;
+//        intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(intent,SET_BACK_GROUND);
     }
 
     @Event(R.id.more_gpa)
@@ -124,34 +124,6 @@ public class MoreFragment extends BaseFragment {
 
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case SET_BACK_GROUND://选择相册之后的处理
-                Log.e("sdf","Sdf");
-                if (resultCode == RESULT_OK) {
-                    String url=RxPhotoUtils.getRealFilePath(mAppCompatActivity,data.getData());
-                    setBack(url);
-                }
-                break;
-            case RxPhotoUtils.CROP_IMAGE://普通裁剪后的处理
-                Log.e("asd",data.getData()+"");
-//               RequestUpdateAvatar(new File(RxPhotoUtils.getRealFilePath(activity, RxPhotoUtils.cropImageUri)));
-            default:
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    public void setBack(String url){
-        SharedPreferences skinSettingPreference=MoreFragment.this.getActivity().getSharedPreferences("background", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = skinSettingPreference.edit();
-        editor.putString("background", url);
-        editor.apply();
-        Bitmap bitmap = RxImageUtils.getBitmap(url);
-        Drawable drawable=RxImageUtils.bitmap2Drawable(bitmap);
-        Log.e("sd",url);
-        RelativeLayout backgournd=(RelativeLayout)getActivity().findViewById(R.id.main_background) ;
-        backgournd.setBackground(drawable);
-    }
+
 }
