@@ -2,11 +2,13 @@ package com.mage.magemata.user;
 
 import com.stfalcon.chatkit.commons.models.IUser;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/9/12.
  */
 
-public class User  implements IUser  {
+public class User  implements IUser ,Serializable {
 
     @Override
     public String getId() {

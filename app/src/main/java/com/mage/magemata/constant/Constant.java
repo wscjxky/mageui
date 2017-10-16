@@ -12,6 +12,10 @@ public class Constant {
     public  static  final  int ITEM_LOGO_SIZE=185;
     public  static  final  int ITEM_PROFILE_SIZE=150;
 
+    public static final String CURRENT_TIME = "CURRENT_TIME";
+    public static final String MAINBAR_INDEX ="MAINBAR_INDEX" ;
+
+
     public  static  String UPLOAD="http://47.94.251.202/mage/public/index.php/upload";
     public  static  String SHOWIMAGE="http://47.94.251.202/mage/public/";
 
@@ -39,6 +43,12 @@ public class Constant {
     public static final String GOOD_ID = "good_id";
 
     public static String VALUE_CIRCLE_ID;
+
+    public static final String DIALOG_ID ="DIALOG_ID" ;
+    public static final String DIALOG_NAME = "DIALOG_NAME";
+    public static final String DIALOG_CHATUSER_ID ="DIALOG_CHATUSER_ID" ;
+    public static final String DIALOG_CHATUSER_IMAGE ="DIALOG_CHATUSER_IMAGE" ;
+
 
     //数据库字段
     public static final String FLASH_USER_ID="flash_user_id";

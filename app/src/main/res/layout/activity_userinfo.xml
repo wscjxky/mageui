@@ -80,7 +80,7 @@
                 android:id="@+id/userinfo_but_follow"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="120dp"
+                android:layout_marginLeft="140dp"
                 android:src="@android:color/darker_gray"
                 app:allow_random_color="false"
                 app:big_shine_color="#FF6666"

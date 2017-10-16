@@ -34,6 +34,9 @@ import org.xutils.x;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
@@ -41,6 +44,7 @@ import es.dmoral.toasty.Toasty;
 import static com.mage.magemata.constant.Constant.CIRCLE_ID;
 import static com.mage.magemata.constant.Constant.CIRCLE_ITEM_ID;
 import static com.mage.magemata.constant.Constant.CIRCLE_TITLE;
+import static com.mage.magemata.constant.Constant.CURRENT_TIME;
 import static com.mage.magemata.constant.Constant.UPLOAD;
 import static com.mage.magemata.util.PublicMethod.zipImage;
 import static com.vondear.rxtools.RxPhotoUtils.GET_IMAGE_FROM_PHONE;
@@ -57,8 +61,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected View rootView;
     public View view;
-
-
+    private String currenttime;
 
 
     @Override
@@ -90,6 +93,9 @@ public abstract class BaseFragment extends Fragment {
     //为View设置数据
     protected abstract void setData();
 
+
+
+
     //获取用户信息
     protected String getUserId(){
         return MyPrefence.getInstance(mAppCompatActivity).getUserId();
@@ -107,6 +113,7 @@ public abstract class BaseFragment extends Fragment {
     protected void setCircleItemId(int id){
         MyPrefence.getInstance(mAppCompatActivity).saveInt(CIRCLE_ITEM_ID,id);
     }
+
     protected int getCircleId(){
         return  MyPrefence.getInstance(mAppCompatActivity).getInt(CIRCLE_ID);
     }

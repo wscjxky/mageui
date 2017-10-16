@@ -19,7 +19,9 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.mage.magemata.R;
+import com.mage.magemata.chat.ChatFragment;
 import com.mage.magemata.main.BaseActivity;
+import com.mage.magemata.main.MainActivity;
 import com.mage.magemata.util.MyPrefence;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
@@ -27,11 +29,13 @@ import com.vondear.rxtools.RxDataUtils;
 import com.vondear.rxtools.RxImageUtils;
 import com.vondear.rxtools.RxPhotoUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.mage.magemata.constant.Constant.FLASH_USER_ID;
 import static com.mage.magemata.constant.Constant.FOLLOW_USER_ID;
+import static com.mage.magemata.constant.Constant.MAINBAR_INDEX;
 import static com.mage.magemata.constant.Constant.ROOT_URL;
 import static com.mage.magemata.constant.Constant.SET_BACK_GROUND;
 import static com.mage.magemata.constant.Constant.USER_ID;
@@ -58,6 +63,7 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
     private int mMaxScrollSize;
     private String get_user_url=ROOT_URL+"user/";
     private String user_follow_url=ROOT_URL+"userfollow/";
+    private String POST_DIALOG=ROOT_URL+"dialog";
 
     @ViewInject(R.id.userinfo_btn_chat)
     FloatingActionButton btn_chat;
@@ -91,7 +97,7 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
         else{
             mProfileImage.setClickable(false);
         }
-
+        Log.e("flash",flash_user_id);
         follow_btn.init(this);
         follow_btn.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
             @Override
@@ -254,6 +260,49 @@ public class UserInfoActivity extends BaseActivity  implements AppBarLayout.OnOf
         Intent intent;
         intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent,SET_BACK_GROUND);
+    }
+
+    @Event(R.id.userinfo_btn_chat)
+    private void chat(View view){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("user_id", getUserId());
+        map.put("chatuser_id", flash_user_id);
+        httpPost(POST_DIALOG, map, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        String state = null;
+                        try {
+                            state = result.getString("state");
+                            LOG(state);
+                            switch (state) {
+                                case "ok":
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+        Bundle bundle=new Bundle() ;
+        bundle.putInt(MAINBAR_INDEX,2);
+        readyGo(MainActivity.class,bundle);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

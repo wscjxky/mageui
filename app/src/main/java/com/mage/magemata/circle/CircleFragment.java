@@ -18,6 +18,7 @@ import com.mage.magemata.R;
 import com.mage.magemata.circle.card.CircleActivity;
 import com.mage.magemata.circle.mycircle.*;
 import com.mage.magemata.main.BaseFragment;
+import com.mage.magemata.publish.usedgood.Good;
 import com.squareup.picasso.Picasso;
 import com.vondear.rxtools.view.dialog.RxDialogEditSureCancel;
 
@@ -86,11 +87,23 @@ public class CircleFragment extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter(){
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                httpGet(GET_CIRCLE, new Callback.CommonCallback<JSONArray>() {
+                httpGet(GET_CIRCLE, new Callback.CommonCallback<JSONObject>() {
                     @Override
-                    public void onSuccess(JSONArray result) {
-                        circlelist.clear();
-                        circlelist = new Gson().fromJson(result.toString(), new TypeToken<ArrayList<Circle>>() {}.getType());
+                    public void onSuccess(JSONObject result) {
+                        try {
+                            String state=result.getString("state");
+                            switch (state){
+                                case "ok":
+                                    circlelist.clear();
+                                    circlelist = new Gson().fromJson(result.getString("data"), new TypeToken<ArrayList<Circle>>() {}.getType());
+                                    break;
+                                default:
+                                    LOG("error");
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                     @Override
                     public void onError(Throwable ex, boolean isOnCallback) {

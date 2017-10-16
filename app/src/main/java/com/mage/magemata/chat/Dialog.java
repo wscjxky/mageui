@@ -3,6 +3,7 @@ package com.mage.magemata.chat;
 import com.mage.magemata.user.User;
 import com.stfalcon.chatkit.commons.models.IDialog;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,9 +13,11 @@ import java.util.Date;
 /*
  * Created by troy379 on 04.04.17.
  */
-public class Dialog implements IDialog<Message> {
+public class Dialog implements IDialog<Message> ,Serializable {
 
     public  User user;
+    public  User chatuser;
+
     public String dialog_id;
     public String user_id;
     public String chatuser_id;
@@ -29,14 +32,21 @@ public class Dialog implements IDialog<Message> {
 
     public int unreadCount=0;
 
-    public Dialog(String id, String name, String photo,
-                  User user,String time) {
+    public Dialog(){}
+
+    public Dialog(String id,User user,User chatuser,
+                   String time) {
         this.dialog_id = id;
-        this.chatuser_name = name;
-        this.chatuser_image = photo;
+        this.user = user;
+        this.chatuser = chatuser;
+        this.chatuser_id = chatuser.user_id;
+        this.chatuser_name = chatuser.name;
+        this.dialogName=chatuser.name;
+        this.chatuser_image = chatuser.profile;
         this.unreadCount = 0;
-        users = new ArrayList<User>();
-        users.add(user);
+        this.users = new ArrayList<User>();
+        this.users.add(user);
+        this.users.add(chatuser);
         try {
             DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = sdf.parse(time);
@@ -44,6 +54,22 @@ public class Dialog implements IDialog<Message> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+//    public Dialog(String id,String chatuser_id, String name, String photo,
+//                  User user,String time) {
+//        this.dialog_id = id;
+//        this.chatuser_id= chatuser_id;
+//        this.chatuser_name = name;
+//        this.chatuser_image = photo;
+//        this.unreadCount = 0;
+//        users = new ArrayList<User>();
+//        users.add(user);
+//        try {
+//            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Date date = sdf.parse(time);
+//            this.lastMessage = new Message("1", user,"", date);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
     }
 
         @Override

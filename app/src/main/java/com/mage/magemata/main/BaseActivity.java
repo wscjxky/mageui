@@ -117,6 +117,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         Bundle bundle=new Bundle();
         return bundle.getInt(key);
     }
+    protected Bundle getBundle(){
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        return bundle;
+    }
 
 
     //储存myprefence

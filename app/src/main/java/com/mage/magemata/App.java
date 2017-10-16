@@ -3,9 +3,17 @@ package com.mage.magemata;
 import android.app.Application;
 
 import com.lzy.okgo.OkGo;
+import com.mage.magemata.util.MyPrefence;
 import com.vondear.rxtools.RxUtils;
 
 import org.xutils.x;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.mage.magemata.constant.Constant.CURRENT_TIME;
+import static com.mage.magemata.util.PublicMethod.LOG;
 
 /**
  * Created by Administrator on 2017/9/7.
@@ -25,6 +33,8 @@ public class App extends Application {
 //            return;
 //        }
 //        LeakCanary.install(this);
+        //储存时间
+        setCurrentTime();
 
         RxUtils.init(this);
         x.Ext.init(this);
@@ -32,5 +42,13 @@ public class App extends Application {
 
         // Normal app init code...
     }
+    protected void setCurrentTime (){
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currenttime=sdf.format(new Date());
+        LOG(currenttime);
+        MyPrefence.getInstance(this).saveString(CURRENT_TIME,currenttime);
+
+    }
+
 
 }
